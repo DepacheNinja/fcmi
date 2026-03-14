@@ -154,17 +154,17 @@
         <location filename="../campaigneditor/campaigneditor.cpp" line="66"/>
         <location filename="../campaigneditor/campaigneditor.cpp" line="405"/>
         <source>Failed to open campaign</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось открыть кампанию</translation>
     </message>
     <message>
         <location filename="../campaigneditor/campaigneditor.cpp" line="173"/>
         <source>Validation failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Проверка провалилась</translation>
     </message>
     <message>
         <location filename="../campaigneditor/campaigneditor.cpp" line="173"/>
         <source>Campaign has no maps defined.</source>
-        <translation type="unfinished"></translation>
+        <translation>Кампания не имеет определённых карт.</translation>
     </message>
     <message>
         <location filename="../campaigneditor/campaigneditor.cpp" line="251"/>
@@ -175,7 +175,7 @@
         <location filename="../campaigneditor/campaigneditor.cpp" line="253"/>
         <source>All supported campaigns (*.vcmp *.h3c);;VCMI campaigns(*.vcmp);;HoMM3 campaigns(*.h3c)</source>
         <translatorcomment>AI-generated, needs review by native speaker; delete this comment afterwards</translatorcomment>
-        <translation type="unfinished">Все поддерживаемые кампании (*.vcmp *.h3c);;Кампании VCMI (*.vcmp);;Кампании HoMM3 (*.h3c)</translation>
+        <translation>Все поддерживаемые кампании (*.vcmp *.h3c);;Кампании VCMI (*.vcmp);;Кампании Героев III (*.h3c)</translation>
     </message>
     <message>
         <location filename="../campaigneditor/campaigneditor.cpp" line="280"/>
@@ -284,7 +284,7 @@
         <location filename="../campaigneditor/campaignproperties.ui" line="106"/>
         <source>Scenario difficulty is user selectable</source>
         <translatorcomment>AI-generated, needs review by native speaker; delete this comment afterwards</translatorcomment>
-        <translation type="unfinished">Сложность сценария выбирается игроком</translation>
+        <translation>Сложность сценария может выбираться игроком</translation>
     </message>
     <message>
         <location filename="../campaigneditor/campaignproperties.ui" line="114"/>
@@ -385,25 +385,25 @@
         <location filename="../campaigneditor/campaignproperties.cpp" line="149"/>
         <source>X</source>
         <translatorcomment>AI-generated, needs review by native speaker; delete this comment afterwards</translatorcomment>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../campaigneditor/campaignproperties.cpp" line="149"/>
         <source>Y</source>
         <translatorcomment>AI-generated, needs review by native speaker; delete this comment afterwards</translatorcomment>
-        <translation type="unfinished">Y</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../campaigneditor/campaignproperties.cpp" line="149"/>
         <source>Label Pos X</source>
         <translatorcomment>AI-generated, needs review by native speaker; delete this comment afterwards</translatorcomment>
-        <translation type="unfinished">Позиция метки X</translation>
+        <translation>Позиция метки X</translation>
     </message>
     <message>
         <location filename="../campaigneditor/campaignproperties.cpp" line="149"/>
         <source>Label Pos Y</source>
         <translatorcomment>AI-generated, needs review by native speaker; delete this comment afterwards</translatorcomment>
-        <translation type="unfinished">Позиция метки Y</translation>
+        <translation>Позиция метки Y</translation>
     </message>
     <message>
         <location filename="../campaigneditor/campaignproperties.cpp" line="201"/>
