@@ -99,7 +99,7 @@
     <message>
         <location filename="../aboutProject/aboutproject_moc.cpp" line="170"/>
         <source>Zip archives (*.zip)</source>
-        <translation>ZIP-arkiv (*.zip)</translation>
+        <translation>Zip-arkiv (*.zip)</translation>
     </message>
     <message>
         <location filename="../aboutProject/aboutproject_moc.cpp" line="272"/>
@@ -227,7 +227,7 @@
     <message>
         <location filename="../modManager/cmodlistview_moc.ui" line="348"/>
         <source>Abort</source>
-        <translation>Avbryt</translation>
+        <translation>Avbryt nu</translation>
     </message>
     <message>
         <source>Mod name</source>
@@ -422,17 +422,17 @@ Vänligen rapportera detta problem till utvecklarna</translation>
     <message>
         <location filename="../modManager/cmodlistview_moc.cpp" line="1087"/>
         <source>Extracting error!</source>
-        <translation type="unfinished">Extraheringsfel!</translation>
+        <translation>Extraheringsfel!</translation>
     </message>
     <message>
         <location filename="../modManager/cmodlistview_moc.cpp" line="1089"/>
         <source>Invalid file selected</source>
-        <translation type="unfinished">Ogiltig fil vald</translation>
+        <translation>Ogiltig fil vald</translation>
     </message>
     <message>
         <location filename="../modManager/cmodlistview_moc.cpp" line="1089"/>
         <source>You have to select a Heroes Chronicles installer file!</source>
-        <translation type="unfinished">Du måste välja en installationsfil för Hjältarnas Krönikor (Heroes Chronicles)!</translation>
+        <translation>Du måste välja en installationsfil för Heroes Chronicles!</translation>
     </message>
     <message>
         <location filename="../modManager/cmodlistview_moc.cpp" line="1143"/>
@@ -475,12 +475,12 @@ Vänligen rapportera detta problem till utvecklarna</translation>
     <message>
         <location filename="../modManager/cmodlistview_moc.cpp" line="1443"/>
         <source>Uninstall mod</source>
-        <translation type="unfinished"></translation>
+        <translation>Avinstallera modd</translation>
     </message>
     <message>
         <location filename="../modManager/cmodlistview_moc.cpp" line="1443"/>
         <source>Are you sure you want to uninstall %1?</source>
-        <translation type="unfinished"></translation>
+        <translation>Är ni säker på att ni vill avinstallera %1?</translation>
     </message>
     <message>
         <source>%1 map(s) successfully imported.</source>
@@ -675,7 +675,7 @@ Vänligen rapportera detta problem till utvecklarna</translation>
     <message>
         <location filename="../settingsView/csettingsview_moc.ui" line="554"/>
         <source>Miscellaneous</source>
-        <translation>Övrigt</translation>
+        <translation>Diverse</translation>
     </message>
     <message>
         <location filename="../settingsView/csettingsview_moc.ui" line="1407"/>
@@ -1032,12 +1032,12 @@ Exklusivt helskärmsläge - spelet täcker hela skärmen och använder den valda
         <location filename="../modManager/chroniclesextractor.cpp" line="100"/>
         <location filename="../modManager/chroniclesextractor.cpp" line="101"/>
         <source>Heroes Chronicles</source>
-        <translation>Heroes Chronicles</translation>
+        <translation>Hjältarnas Krönikor</translation>
     </message>
     <message>
         <location filename="../modManager/chroniclesextractor.cpp" line="149"/>
         <source>Heroes Chronicles %1 - %2</source>
-        <translation>Heroes Chronicles %1 - %2</translation>
+        <translation>Hjältarnas Krönikor %1 - %2</translation>
     </message>
 </context>
 <context>
@@ -1305,7 +1305,7 @@ När dessa två filer finns på din enhet kan VCMI börja importera nödvändiga
     <message>
         <location filename="../firstLaunch/firstlaunch_moc.ui" line="731"/>
         <source>Horn of the Abyss</source>
-        <translation>Avgrundens Horn (Horn of the Abyss)</translation>
+        <translation>Avgrundens Horn (HotA)</translation>
     </message>
     <message>
         <location filename="../firstLaunch/firstlaunch_moc.ui" line="658"/>
@@ -1393,7 +1393,8 @@ Vänligen välj mappen med Heroes III: Complete Edition eller Heroes III: Shadow
         <location filename="../firstLaunch/firstlaunch_moc.cpp" line="376"/>
         <source>Unknown installer selected.
 You need to select the offline GOG installer.</source>
-        <translation>Ni behöver välja en offline backup game installer från GOG.</translation>
+        <translation>Ett okänt installationsprogram har valts.
+Du måste välja det offlinebaserade GOG-installationsprogrammet.</translation>
     </message>
     <message>
         <location filename="../firstLaunch/firstlaunch_moc.cpp" line="388"/>
@@ -1517,17 +1518,17 @@ Vänligen välj mappen där ni installerade Heroes III.</translation>
     <message>
         <location filename="../modManager/imageviewer_moc.ui" line="100"/>
         <source>&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <location filename="../modManager/imageviewer_moc.ui" line="138"/>
         <source>&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&gt;</translation>
     </message>
     <message>
         <location filename="../modManager/imageviewer_moc.ui" line="176"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
 </context>
 <context>
@@ -1591,12 +1592,12 @@ Bin-filer (%n byte):
     <message>
         <location filename="../innoextract.cpp" line="157"/>
         <source>Exe</source>
-        <translation>Exe</translation>
+        <translation>EXE</translation>
     </message>
     <message>
         <location filename="../innoextract.cpp" line="157"/>
         <source>Bin</source>
-        <translation>Bin</translation>
+        <translation>BIN</translation>
     </message>
     <message>
         <location filename="../innoextract.cpp" line="166"/>
@@ -1655,7 +1656,7 @@ Bin-filer (%n byte):
     <message>
         <location filename="../languages.cpp" line="27"/>
         <source>Dutch</source>
-        <translation type="unfinished"></translation>
+        <translation>Nederländska</translation>
     </message>
     <message>
         <location filename="../languages.cpp" line="28"/>
@@ -1665,7 +1666,7 @@ Bin-filer (%n byte):
     <message>
         <location filename="../languages.cpp" line="29"/>
         <source>Filipino</source>
-        <translation type="unfinished"></translation>
+        <translation>Filippinska</translation>
     </message>
     <message>
         <location filename="../languages.cpp" line="30"/>
@@ -1710,7 +1711,7 @@ Bin-filer (%n byte):
     <message>
         <location filename="../languages.cpp" line="38"/>
         <source>Latvian</source>
-        <translation type="unfinished"></translation>
+        <translation>Lettiska</translation>
     </message>
     <message>
         <location filename="../languages.cpp" line="39"/>
@@ -1740,7 +1741,7 @@ Bin-filer (%n byte):
     <message>
         <location filename="../languages.cpp" line="44"/>
         <source>Serbian</source>
-        <translation type="unfinished"></translation>
+        <translation>Serbiska</translation>
     </message>
     <message>
         <location filename="../languages.cpp" line="45"/>
@@ -2222,7 +2223,7 @@ Orsak: %2</translation>
     <message>
         <location filename="../startGame/StartGameTab.cpp" line="251"/>
         <source>Gog files</source>
-        <translation>GOG-filer</translation>
+        <translation>Gog-filer</translation>
     </message>
     <message>
         <location filename="../startGame/StartGameTab.cpp" line="254"/>
@@ -2232,7 +2233,7 @@ Orsak: %2</translation>
     <message>
         <location filename="../startGame/StartGameTab.cpp" line="256"/>
         <source>Select files (configs, mods, maps, campaigns, gog files) to install...</source>
-        <translation>Välj filer (konfigurations-, modd-, kart-, kampanj-och GOG-filer) som ni vill installera...</translation>
+        <translation>Välj filer (konfigurations-, modd-, kart-, kampanj-och gog-filer) att installera...</translation>
     </message>
     <message>
         <location filename="../startGame/StartGameTab.cpp" line="299"/>
