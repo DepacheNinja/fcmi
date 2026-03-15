@@ -28,14 +28,15 @@ namespace api
 {
 
 // FCMI: get a player's resource amount — GAME:getPlayerResource(playerIndex, resourceType)
-// playerIndex: 0-7 (PlayerColor), resourceType: 0=wood 1=mercury 2=ore 3=sulfur 4=crystal 5=gems 6=gold
+// playerIndex: 0-7 integer, resourceType: 0=wood 1=mercury 2=ore 3=sulfur 4=crystal 5=gems 6=gold
 int GameCbProxy::getPlayerResource(lua_State * L)
 {
 	LuaStack S(L);
 	const GameCb * object = nullptr;
 	if(!S.tryGet(1, object)) return S.retNil();
-	PlayerColor player;
-	if(!S.tryGet(2, player)) return S.retNil();
+	int32_t playerIdx = -1;
+	if(!S.tryGet(2, playerIdx)) return S.retNil();
+	PlayerColor player(playerIdx);
 	GameResID resType;
 	if(!S.tryGet(3, resType)) return S.retNil();
 	S.clear();
@@ -44,13 +45,15 @@ int GameCbProxy::getPlayerResource(lua_State * L)
 }
 
 // FCMI: check if a player is human — GAME:isPlayerHuman(playerIndex)
+// playerIndex: 0-7 integer (matches event:getPlayer() return value)
 int GameCbProxy::isPlayerHuman(lua_State * L)
 {
 	LuaStack S(L);
 	const GameCb * object = nullptr;
 	if(!S.tryGet(1, object)) return S.retNil();
-	PlayerColor player;
-	if(!S.tryGet(2, player)) return S.retNil();
+	int32_t playerIdx = -1;
+	if(!S.tryGet(2, playerIdx)) return S.retNil();
+	PlayerColor player(playerIdx);
 	S.clear();
 	const auto * state = object->getPlayerState(player, false);
 	S.push(state != nullptr && state->isHuman());
