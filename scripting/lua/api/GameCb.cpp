@@ -19,6 +19,7 @@
 #include "../../../lib/callback/IGameInfoCallback.h"
 #include "../../../lib/mapObjects/CGHeroInstance.h"
 #include "../../../lib/ResourceSet.h"
+#include "../../../lib/CPlayerState.h"
 
 VCMI_LIB_NAMESPACE_BEGIN
 
