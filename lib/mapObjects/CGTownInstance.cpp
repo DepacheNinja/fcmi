@@ -115,11 +115,12 @@ int CGTownInstance::mageGuildLevel() const
 
 int CGTownInstance::getHordeLevel(const int & HID)  const//HID - 0 or 1; returns creature level or -1 if that horde structure is not present
 {
-	// FCMI: guard against out-of-bounds — hordeLvl should always have 2 entries but mod data may differ
+	// FCMI: guard against missing horde entries — hordeLvl is a map keyed by horde index
 	const auto & levels = getTown()->hordeLvl;
-	if(HID < 0 || static_cast<size_t>(HID) >= levels.size())
+	auto it = levels.find(HID);
+	if(it == levels.end())
 		return -1;
-	return levels[HID];
+	return it->second;
 }
 
 int CGTownInstance::creatureGrowth(const int & level) const
@@ -155,13 +156,15 @@ GrowthInfo CGTownInstance::getGrowthInfo(int level) const
 	else if (hasBuilt(BuildingID::CITADEL))
 		ret.entries.emplace_back(subID, BuildingID::CITADEL, castleBonus = base / 2);
 
-	// FCMI: guard against towns with fewer than 2 horde levels (mod data)
+	// FCMI: guard against towns with missing horde levels — hordeLvl is a map keyed by horde index
 	const auto & hordeLvl = getTown()->hordeLvl;
-	if(hordeLvl.size() > 0 && hordeLvl[0] == level)//horde 1
+	auto h0 = hordeLvl.find(0);
+	if(h0 != hordeLvl.end() && h0->second == level)//horde 1
 		if(hasBuilt(BuildingID::HORDE_1))
 			ret.entries.emplace_back(subID, BuildingID::HORDE_1, creature->getHorde());
 
-	if(hordeLvl.size() > 1 && hordeLvl[1] == level)//horde 2
+	auto h1 = hordeLvl.find(1);
+	if(h1 != hordeLvl.end() && h1->second == level)//horde 2
 		if(hasBuilt(BuildingID::HORDE_2))
 			ret.entries.emplace_back(subID, BuildingID::HORDE_2, creature->getHorde());
 
