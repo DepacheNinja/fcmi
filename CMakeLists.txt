@@ -735,9 +735,9 @@ else()
 	if (ENABLE_CLIENT OR ENABLE_SERVER)
 		install(DIRECTORY Mods DESTINATION ${DATA_DIR})
 	endif()
-endif()
-if(ENABLE_LUA)
-	install(DIRECTORY scripts DESTINATION ${DATA_DIR})
+	if(ENABLE_LUA)
+		install(DIRECTORY scripts DESTINATION ${DATA_DIR})
+	endif()
 endif()
 
 # that script is useless for Windows / iOS / Android
