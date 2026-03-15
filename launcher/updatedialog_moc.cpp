@@ -52,7 +52,14 @@ UpdateDialog::UpdateDialog(bool calledManually, QWidget *parent):
 #endif
 	
 	QString url = QString::fromStdString(settings["launcher"]["updateConfigUrl"].String());
-		
+
+	// FCMI: update checks disabled — self-contained build, no phoning home
+	if(url.isEmpty())
+	{
+		ui->versionLabel->setText(tr("Update checks disabled in this build"));
+		return;
+	}
+
 	QNetworkReply *response = networkManager.get(QNetworkRequest(QUrl(url)));
 	
 	connect(response, &QNetworkReply::finished, [&, response]{

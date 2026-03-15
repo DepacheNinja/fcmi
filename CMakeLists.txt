@@ -38,7 +38,7 @@ endif()
 
 option(ENABLE_CLIENT "Enable compilation of game client" ON)
 option(ENABLE_ERM "Enable compilation of ERM scripting module" OFF)
-option(ENABLE_LUA "Enable compilation of LUA scripting module" OFF)
+option(ENABLE_LUA "Enable compilation of LUA scripting module" ON) # FCMI: enabled for WOG scripting
 option(ENABLE_VIDEO "Enable video support using ffmpeg" ON)
 option(ENABLE_TRANSLATIONS "Enable generation of translations for launcher and editor" ON)
 option(ENABLE_MINIMAL_LIB "Build only core parts of vcmi library that are required for game lobby" OFF)

@@ -724,11 +724,11 @@
 			"properties" : {
 				"defaultRepositoryEnabled" : {
 					"type" : "boolean",
-					"default" : true
+					"default" : false
 				},
 				"defaultRepositoryURL" : {
 					"type" : "string",
-					"default" : "https://raw.githubusercontent.com/vcmi/vcmi-mods-repository/develop/vcmi-1.8.json"
+					"default" : ""
 				},
 				"extraRepositoryEnabled" : {
 					"type" : "boolean",
@@ -748,15 +748,15 @@
 				},
 				"autoCheckRepositories" : {
 					"type" : "boolean",
-					"default" : true
+					"default" : false
 				},
 				"updateOnStartup" : {
 					"type" : "boolean",
-					"default" : true
+					"default" : false
 				},
 				"updateConfigUrl" : {
 					"type" : "string",
-					"default" : "https://raw.githubusercontent.com/vcmi/vcmi-updates/master/vcmi-updates.json"
+					"default" : ""
 				},
 				"trackClipboardState" : {
 					"type" : "boolean",

@@ -243,6 +243,7 @@
             "cacheVariables": {
                 "CMAKE_POLICY_DEFAULT_CMP0091": "NEW",
                 "ENABLE_CCACHE": "ON",
+                "ENABLE_LUA": "ON",
                 "CMAKE_C_COMPILER_LAUNCHER": "sccache",
                 "CMAKE_CXX_COMPILER_LAUNCHER": "sccache",
                 "CMAKE_MSVC_DEBUG_INFORMATION_FORMAT": "Embedded",
