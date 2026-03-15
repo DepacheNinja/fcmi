@@ -931,6 +931,11 @@ void CGameInfoCallback::getAllowedSpells(std::vector<SpellID> & out, std::option
 bool CGameInfoCallback::checkForVisitableDir(const int3 & src, const int3 & dst) const
 {
 	const CMap & map = gameState().getMap();
+	if(!map.isInTheMap(dst)) // FCMI: guard against out-of-bounds crash
+	{
+		logGlobal->error("FCMI: checkForVisitableDir called with out-of-bounds dst %s", dst.toString());
+		return false;
+	}
 	const TerrainTile * pom = &map.getTile(dst);
 	return map.checkForVisitableDir(src, pom, dst);
 }

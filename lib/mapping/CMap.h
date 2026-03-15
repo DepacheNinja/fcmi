@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <algorithm>
+
 #include "CMapEvent.h"
 #include "CMapHeader.h"
 #include "TerrainTile.h"
@@ -389,12 +391,24 @@ inline bool CMap::isInTheMap(const int3 & pos) const
 inline TerrainTile & CMap::getTile(const int3 & tile)
 {
 	assert(isInTheMap(tile));
+	// FCMI crash guard: in release builds assert is a no-op, clamp to valid range instead of crashing
+	if(!isInTheMap(tile))
+	{
+		int3 clamped = { std::clamp(tile.x, 0, width-1), std::clamp(tile.y, 0, height-1), std::clamp(tile.z, 0, levels()-1) };
+		return terrain[clamped];
+	}
 	return terrain[tile];
 }
 
 inline const TerrainTile & CMap::getTile(const int3 & tile) const
 {
 	assert(isInTheMap(tile));
+	// FCMI crash guard: in release builds assert is a no-op, clamp to valid range instead of crashing
+	if(!isInTheMap(tile))
+	{
+		int3 clamped = { std::clamp(tile.x, 0, width-1), std::clamp(tile.y, 0, height-1), std::clamp(tile.z, 0, levels()-1) };
+		return terrain[clamped];
+	}
 	return terrain[tile];
 }
 
