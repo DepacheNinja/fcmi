@@ -355,7 +355,8 @@
             ],
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "RelWithDebInfo",
-                "ANDROIDDEPLOYQT_OPTIONS" : "--aab"
+                "ANDROIDDEPLOYQT_OPTIONS" : "--aab",
+                "ENABLE_LUA": "OFF"
             }
         },
         {
