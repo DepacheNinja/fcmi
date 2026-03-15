@@ -115,7 +115,11 @@ int CGTownInstance::mageGuildLevel() const
 
 int CGTownInstance::getHordeLevel(const int & HID)  const//HID - 0 or 1; returns creature level or -1 if that horde structure is not present
 {
-	return getTown()->hordeLvl.at(HID);
+	// FCMI: guard against out-of-bounds — hordeLvl should always have 2 entries but mod data may differ
+	const auto & levels = getTown()->hordeLvl;
+	if(HID < 0 || static_cast<size_t>(HID) >= levels.size())
+		return -1;
+	return levels[HID];
 }
 
 int CGTownInstance::creatureGrowth(const int & level) const
@@ -151,11 +155,13 @@ GrowthInfo CGTownInstance::getGrowthInfo(int level) const
 	else if (hasBuilt(BuildingID::CITADEL))
 		ret.entries.emplace_back(subID, BuildingID::CITADEL, castleBonus = base / 2);
 
-	if(getTown()->hordeLvl.at(0) == level)//horde 1
+	// FCMI: guard against towns with fewer than 2 horde levels (mod data)
+	const auto & hordeLvl = getTown()->hordeLvl;
+	if(hordeLvl.size() > 0 && hordeLvl[0] == level)//horde 1
 		if(hasBuilt(BuildingID::HORDE_1))
 			ret.entries.emplace_back(subID, BuildingID::HORDE_1, creature->getHorde());
 
-	if(getTown()->hordeLvl.at(1) == level)//horde 2
+	if(hordeLvl.size() > 1 && hordeLvl[1] == level)//horde 2
 		if(hasBuilt(BuildingID::HORDE_2))
 			ret.entries.emplace_back(subID, BuildingID::HORDE_2, creature->getHorde());
 
@@ -525,7 +531,11 @@ void CGTownInstance::initializeNeutralTownGarrison(vstd::RNG & rand)
 		if (rand.nextInt(99) >= guard.chance)
 			continue;
 
-		CreatureID guardID = getTown()->creatures[guard.tier].at(0);
+		// FCMI: guard against invalid tier or empty creature list
+		const auto & creaturesByTier = getTown()->creatures;
+		if(guard.tier < 0 || static_cast<size_t>(guard.tier) >= creaturesByTier.size()) continue;
+		if(creaturesByTier[guard.tier].empty()) continue;
+		CreatureID guardID = creaturesByTier[guard.tier].at(0);
 		int guardSize = rand.nextInt(guard.min, guard.max);
 
 		putStack(getFreeSlot(), std::make_unique<CStackInstance>(cb, guardID, guardSize));

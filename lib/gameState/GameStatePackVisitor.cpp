@@ -69,7 +69,11 @@ void GameStatePackVisitor::visitGiveStackExperience(GiveStackExperience & pack)
 	auto * army = gs.getArmyInstance(pack.id);
 
 	for (const auto & slot : pack.val)
-		army->getStackPtr(slot.first)->giveAverageStackExperience(slot.second);
+	{
+		auto * stack = army->getStackPtr(slot.first); // FCMI: null guard
+		if(stack)
+			stack->giveAverageStackExperience(slot.second);
+	}
 
 	army->nodeHasChanged();
 }
@@ -128,17 +132,20 @@ void GameStatePackVisitor::visitAddQuest(AddQuest & pack)
 
 void GameStatePackVisitor::visitChangeFormation(ChangeFormation & pack)
 {
-	gs.getHero(pack.hid)->setFormation(pack.formation);
+	auto * hero = gs.getHero(pack.hid); // FCMI: null guard
+	if(hero) hero->setFormation(pack.formation);
 }
 
 void GameStatePackVisitor::visitChangeTactics(ChangeTactics & pack)
 {
-	gs.getHero(pack.hid)->tacticFormationEnabled = pack.enabled;
+	auto * hero = gs.getHero(pack.hid); // FCMI: null guard
+	if(hero) hero->tacticFormationEnabled = pack.enabled;
 }
 
 void GameStatePackVisitor::visitChangeTownName(ChangeTownName & pack)
 {
-	gs.getTown(pack.tid)->setCustomName(pack.name);
+	auto * town = gs.getTown(pack.tid); // FCMI: null guard
+	if(town) town->setCustomName(pack.name);
 }
 
 void GameStatePackVisitor::visitHeroVisitCastle(HeroVisitCastle & pack)
@@ -277,24 +284,40 @@ void GameStatePackVisitor::visitChangeObjectVisitors(ChangeObjectVisitors & pack
 {
 	auto objectPtr = gs.getObjInstance(pack.object);
 
+	// FCMI: resolve hero and owner once, guard against null
+	auto * heroPtr = (pack.hero.hasValue()) ? gs.getHero(pack.hero) : nullptr;
+	PlayerColor heroOwner = heroPtr ? heroPtr->tempOwner : PlayerColor::NEUTRAL;
+
 	switch (pack.mode)
 	{
 		case ChangeObjectVisitors::VISITOR_ADD_HERO:
-			gs.getHero(pack.hero)->visitedObjects.insert(pack.object);
+			if(heroPtr) heroPtr->visitedObjects.insert(pack.object);
 			[[fallthrough]];
 		case ChangeObjectVisitors::VISITOR_ADD_PLAYER:
-			gs.getPlayerTeam(gs.getHero(pack.hero)->tempOwner)->scoutedObjects.insert(pack.object);
-			gs.getPlayerState(gs.getHero(pack.hero)->tempOwner)->visitedObjects.insert(pack.object);
-			gs.getPlayerState(gs.getHero(pack.hero)->tempOwner)->visitedObjectsGlobal.insert({objectPtr->ID, objectPtr->subID});
+			if(heroPtr && objectPtr)
+			{
+				if(auto * team = gs.getPlayerTeam(heroOwner)) team->scoutedObjects.insert(pack.object);
+				if(auto * state = gs.getPlayerState(heroOwner))
+				{
+					state->visitedObjects.insert(pack.object);
+					state->visitedObjectsGlobal.insert({objectPtr->ID, objectPtr->subID});
+				}
+			}
 			break;
 
 		case ChangeObjectVisitors::VISITOR_CLEAR:
 			// remove visit info from all heroes, including those that are not present on map
 			for (auto heroID : gs.getMap().getHeroesOnMap())
-				gs.getHero(heroID)->visitedObjects.erase(pack.object);
+			{
+				auto * h = gs.getHero(heroID); // FCMI: null guard
+				if(h) h->visitedObjects.erase(pack.object);
+			}
 
 			for (auto heroID : gs.getMap().getHeroesInPool())
-				gs.getMap().tryGetFromHeroPool(heroID)->visitedObjects.erase(pack.object);
+			{
+				auto * h = gs.getMap().tryGetFromHeroPool(heroID); // FCMI: null guard
+				if(h) h->visitedObjects.erase(pack.object);
+			}
 
 			for(auto &elem : gs.players)
 				elem.second.visitedObjects.erase(pack.object);
@@ -304,7 +327,8 @@ void GameStatePackVisitor::visitChangeObjectVisitors(ChangeObjectVisitors & pack
 
 			break;
 		case ChangeObjectVisitors::VISITOR_SCOUTED:
-			gs.getPlayerTeam(gs.getHero(pack.hero)->tempOwner)->scoutedObjects.insert(pack.object);
+			if(heroPtr)
+				if(auto * team = gs.getPlayerTeam(heroOwner)) team->scoutedObjects.insert(pack.object);
 			break;
 	}
 }
@@ -1435,8 +1459,10 @@ void GameStatePackVisitor::visitBattleCancelled(BattleCancelled & pack)
 	{
 		if (currentBattle.getSide(i).heroID.hasValue())
 		{
-			CGHeroInstance * hero = gs.getHero(currentBattle.getSideHero(i)->id);
-			hero->mana = currentBattle.getSide(i).initialMana;
+			const auto * sideHero = currentBattle.getSideHero(i); // FCMI: null guard
+			if(!sideHero) continue;
+			CGHeroInstance * hero = gs.getHero(sideHero->id);
+			if(hero) hero->mana = currentBattle.getSide(i).initialMana;
 		}
 	}
 
@@ -1468,8 +1494,10 @@ void GameStatePackVisitor::visitBattleResultsApplied(BattleResultsApplied & pack
 	{
 		if (currentBattle.getSide(i).heroID.hasValue())
 		{
-			CGHeroInstance * hero = gs.getHero(currentBattle.getSideHero(i)->id);
-			hero->mana = std::min(hero->mana, currentBattle.getSide(i).initialMana);
+			const auto * sideHero = currentBattle.getSideHero(i); // FCMI: null guard
+			if(!sideHero) continue;
+			CGHeroInstance * hero = gs.getHero(sideHero->id);
+			if(hero) hero->mana = std::min(hero->mana, currentBattle.getSide(i).initialMana);
 		}
 	}
 }
