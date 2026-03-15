@@ -974,42 +974,41 @@ Fullscreen Exclusive Mode - the game will cover the entirety of your screen and 
         <translation>MMAI（实验性）</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="145"/>
         <source>Nullkiller (superseded by Nullkiller2)</source>
-        <translation>Nullkiller（已被 Nullkiller2 取代）</translation>
+        <translation type="vanished">Nullkiller（已被 Nullkiller2 取代）</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="149"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="145"/>
         <source>Nullkiller2 (default, recommended)</source>
         <translation>Nullkiller2（默认，推荐）</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="159"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="155"/>
         <source>EmptyAI - No valid AI libraries found!</source>
         <translation>EmptyAI - 未找到有效的 AI 库！</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="672"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="668"/>
         <source>Active</source>
         <translation>激活</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="677"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="673"/>
         <source>Disabled</source>
         <translation>禁用</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="678"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="674"/>
         <source>Enable</source>
         <translation>启用</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="683"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="679"/>
         <source>Not Installed</source>
         <translation>未安装</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="684"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="680"/>
         <source>Install</source>
         <translation>安装</translation>
     </message>

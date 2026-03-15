@@ -969,42 +969,41 @@ Pencereli - oyun, ekranınızın bir kısmını kaplayan bir pencerede çalış�
         <translation type="unfinished">MMAI (deneysel)</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="145"/>
         <source>Nullkiller (superseded by Nullkiller2)</source>
-        <translation type="unfinished">Nullkiller (Nullkiller2 ile değiştirildi)</translation>
+        <translation type="obsolete">Nullkiller (Nullkiller2 ile değiştirildi)</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="149"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="145"/>
         <source>Nullkiller2 (default, recommended)</source>
         <translation type="unfinished">Nullkiller2 (varsayılan, önerilen)</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="159"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="155"/>
         <source>EmptyAI - No valid AI libraries found!</source>
         <translation type="unfinished">EmptyAI - Geçerli YZ kütüphaneleri bulunamadı!</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="672"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="668"/>
         <source>Active</source>
         <translation type="unfinished">Etkin</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="677"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="673"/>
         <source>Disabled</source>
         <translation type="unfinished">Devre dışı</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="678"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="674"/>
         <source>Enable</source>
         <translation type="unfinished">Etkinleştir</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="683"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="679"/>
         <source>Not Installed</source>
         <translation type="unfinished">Yüklü değil</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="684"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="680"/>
         <source>Install</source>
         <translation type="unfinished">Yükle</translation>
     </message>

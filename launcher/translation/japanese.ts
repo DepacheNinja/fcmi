@@ -986,45 +986,44 @@ Fullscreen Exclusive Mode - the game will cover the entirety of your screen and 
         <translation type="unfinished">MMAI（実験的）</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="145"/>
         <source>Nullkiller (superseded by Nullkiller2)</source>
         <translatorcomment>AI-generated, needs review by native speaker; delete this comment afterwards</translatorcomment>
-        <translation type="unfinished">Nullkiller（Nullkiller2 に置き換え）</translation>
+        <translation type="obsolete">Nullkiller（Nullkiller2 に置き換え）</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="149"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="145"/>
         <source>Nullkiller2 (default, recommended)</source>
         <translatorcomment>AI-generated, needs review by native speaker; delete this comment afterwards</translatorcomment>
         <translation type="unfinished">Nullkiller2（既定、推奨）</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="159"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="155"/>
         <source>EmptyAI - No valid AI libraries found!</source>
         <translatorcomment>AI-generated, needs review by native speaker; delete this comment afterwards</translatorcomment>
         <translation type="unfinished">EmptyAI - 有効なAIライブラリが見つかりません！</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="672"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="668"/>
         <source>Active</source>
         <translation>アクティブ</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="677"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="673"/>
         <source>Disabled</source>
         <translation>無効</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="678"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="674"/>
         <source>Enable</source>
         <translation>有効にする</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="683"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="679"/>
         <source>Not Installed</source>
         <translation>インストールされていません</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="684"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="680"/>
         <source>Install</source>
         <translation>インストール</translation>
     </message>

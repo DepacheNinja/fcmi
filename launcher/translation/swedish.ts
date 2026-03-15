@@ -970,42 +970,41 @@ Exklusivt helskärmsläge - spelet täcker hela skärmen och använder den valda
         <translation>MMAI (experimentell)</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="145"/>
         <source>Nullkiller (superseded by Nullkiller2)</source>
-        <translation>Nullkiller (ersatt av Nullkiller2)</translation>
+        <translation type="vanished">Nullkiller (ersatt av Nullkiller2)</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="149"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="145"/>
         <source>Nullkiller2 (default, recommended)</source>
         <translation>Nullkiller2 (standard, rekommenderas)</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="159"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="155"/>
         <source>EmptyAI - No valid AI libraries found!</source>
         <translation>EmptyAI - Inga giltiga AI-bibliotek hittades!</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="672"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="668"/>
         <source>Active</source>
         <translation>Aktiv</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="677"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="673"/>
         <source>Disabled</source>
         <translation>Inaktiverad</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="678"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="674"/>
         <source>Enable</source>
         <translation>Aktivera</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="683"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="679"/>
         <source>Not Installed</source>
         <translation>Inte installerad</translation>
     </message>
     <message>
-        <location filename="../settingsView/csettingsview_moc.cpp" line="684"/>
+        <location filename="../settingsView/csettingsview_moc.cpp" line="680"/>
         <source>Install</source>
         <translation>Installera</translation>
     </message>
@@ -1018,7 +1017,7 @@ Exklusivt helskärmsläge - spelet täcker hela skärmen och använder den valda
     </message>
     <message>
         <source>You have to select a Heroes Chronicles installer file!</source>
-        <translation>Ni måste välja en installationsfil för Hjältarnas Krönikor (Heroes Chronicles)!</translation>
+        <translation type="vanished">Ni måste välja en installationsfil för Hjältarnas Krönikor (Heroes Chronicles)!</translation>
     </message>
     <message>
         <source>Extracting error!</source>
