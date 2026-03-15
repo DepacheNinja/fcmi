@@ -34,6 +34,7 @@ const std::vector<SetResourcesProxy::CustomRegType> SetResourcesProxy::REGISTER_
 	{"setPlayer", &SetResourcesProxy::setPlayer, false},
 	{"setAmount", &SetResourcesProxy::setAmount, false},
 	{"getAmount", &SetResourcesProxy::getAmount, false},
+	{"setAbs", &SetResourcesProxy::setAbs, false},  // FCMI: true=absolute value, false=relative delta
 	{"clear", &SetResourcesProxy::clear, false},
 	{"toNetpackLight", &PackForClientProxy<SetResourcesProxy>::toNetpackLight, false}
 };
@@ -112,6 +113,21 @@ int SetResourcesProxy::setAmount(lua_State * L)
 
 	object->res[typeIdx] = amount;
 
+	return S.retVoid();
+}
+
+// FCMI: setAbs(true) = set exact resource value, setAbs(false) = add/subtract relative delta
+int SetResourcesProxy::setAbs(lua_State * L)
+{
+	LuaStack S(L);
+
+	std::shared_ptr<SetResources> object;
+	if(!S.tryGet(1, object))
+		return S.retVoid();
+
+	bool absValue = true;
+	S.tryGet(2, absValue);
+	object->abs = absValue;
 	return S.retVoid();
 }
 

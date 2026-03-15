@@ -28,6 +28,9 @@ public:
 
 	static const std::vector<typename Wrapper::CustomRegType> REGISTER_CUSTOM;
 
+	// FCMI additions for WOG Lua scripting
+	static int getPlayerResource(lua_State * L);
+	static int isPlayerHuman(lua_State * L);
 };
 
 }

@@ -34,6 +34,7 @@ public:
 	static int setPlayer(lua_State * L);
 	static int getAmount(lua_State * L);
 	static int setAmount(lua_State * L);
+	static int setAbs(lua_State * L); // FCMI: set absolute vs relative mode
 	static int clear(lua_State * L);
 };
 
