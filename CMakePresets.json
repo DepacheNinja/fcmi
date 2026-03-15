@@ -263,7 +263,10 @@
             "name": "windows-msvc-ninja-release-arm64",
             "displayName": "Windows ARM64 RelWithDebInfo (Ninja)",
             "description": "VCMI RelWithDebInfo build using Ninja + sccache (ARM64)",
-            "inherits": "windows-msvc-ninja-release"
+            "inherits": "windows-msvc-ninja-release",
+            "cacheVariables": {
+                "ENABLE_LUA": "OFF"
+            }
         },
         {
             "name": "macos-ninja-release",

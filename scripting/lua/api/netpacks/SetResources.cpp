@@ -127,7 +127,7 @@ int SetResourcesProxy::setAbs(lua_State * L)
 
 	bool absValue = true;
 	S.tryGet(2, absValue);
-	object->abs = absValue;
+	object->mode = absValue ? ChangeValueMode::ABSOLUTE : ChangeValueMode::RELATIVE;
 	return S.retVoid();
 }
 
