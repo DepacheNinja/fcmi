@@ -82,7 +82,13 @@ void GameStatePackVisitor::visitSetSecSkill(SetSecSkill & pack)
 
 void GameStatePackVisitor::visitSetCommanderProperty(SetCommanderProperty & pack)
 {
-	const auto & commander = gs.getHero(pack.heroid)->getCommander();
+	const auto * heroPtr = gs.getHero(pack.heroid); // FCMI: null guard
+	if(!heroPtr)
+	{
+		logGlobal->error("FCMI: visitSetCommanderProperty called with invalid hero id");
+		return;
+	}
+	const auto & commander = heroPtr->getCommander();
 	assert (commander);
 
 	switch (pack.which)

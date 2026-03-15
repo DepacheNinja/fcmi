@@ -1607,7 +1607,11 @@ std::set<HeroTypeID> CGameState::getUnusedAllowedHeroes(bool alsoIncludeNotAllow
 	}
 
 	for (auto heroID : map->getHeroesOnMap())
-		ret -= getHero(heroID)->getHeroTypeID();
+	{
+		const auto * hero = getHero(heroID); // FCMI: null guard
+		if(hero)
+			ret -= hero->getHeroTypeID();
+	}
 
 	return ret;
 }
