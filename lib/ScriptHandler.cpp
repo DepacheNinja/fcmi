@@ -100,7 +100,8 @@ void ScriptImpl::serializeJson(vstd::CLoggerBase * logger, JsonSerializeFormat &
 		}
 		catch(const std::exception & e)
 		{
-			throw std::runtime_error("Failed to load script '" + sourcePath + "': " + e.what());
+			if(logger)
+				logger->error("Failed to load script '%s': %s", sourcePath, e.what());
 		}
 	}
 }
