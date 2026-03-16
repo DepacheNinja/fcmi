@@ -92,11 +92,16 @@ void ScriptImpl::serializeJson(vstd::CLoggerBase * logger, JsonSerializeFormat &
 
 		ResourcePath sourcePathId("SCRIPTS/" + sourcePath);
 
-		auto rawData = CResourceHandler::get()->load(sourcePathId)->readAll();
-
-		sourceText = std::string(reinterpret_cast<char *>(rawData.first.get()), rawData.second);
-
-		compile(logger);
+		try
+		{
+			auto rawData = CResourceHandler::get()->load(sourcePathId)->readAll();
+			sourceText = std::string(reinterpret_cast<char *>(rawData.first.get()), rawData.second);
+			compile(logger);
+		}
+		catch(const std::exception & e)
+		{
+			throw std::runtime_error("Failed to load script '" + sourcePath + "': " + e.what());
+		}
 	}
 }
 

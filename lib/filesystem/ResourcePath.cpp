@@ -170,6 +170,8 @@ std::string EResTypeHelper::getEResTypeAsString(EResType type)
 		MAP_ENUM(ERM)
 		MAP_ENUM(ERT)
 		MAP_ENUM(ERS)
+		MAP_ENUM(LUA)
+		MAP_ENUM(AI_MODEL)
 		MAP_ENUM(OTHER)
 	};
 
