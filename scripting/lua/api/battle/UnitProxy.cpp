@@ -27,6 +27,19 @@ namespace battle
 
 VCMI_REGISTER_SCRIPT_API(UnitProxy, "battle.Unit")
 
+// FCMI: getCreatureId — returns integer CreatureID for the unit's creature type.
+// Useful in ApplyDamage handlers to implement creature-type-specific damage rules,
+// e.g. creature hate pairs (Angels vs Liches) or elemental protection checks.
+static int unitGetCreatureId(lua_State * L)
+{
+	LuaStack S(L);
+	const Unit * unit = nullptr;
+	if(!S.tryGet(1, unit)) return S.retNil();
+	S.clear();
+	S.push(unit->creatureId().getNum());
+	return 1;
+}
+
 const std::vector<UnitProxy::CustomRegType> UnitProxy::REGISTER_CUSTOM =
 {
 	{"getMinDamage", LuaMethodWrapper<Unit, decltype(&ACreature::getMinDamage), &ACreature::getMinDamage>::invoke, false},
@@ -35,6 +48,7 @@ const std::vector<UnitProxy::CustomRegType> UnitProxy::REGISTER_CUSTOM =
 	{"getDefense", LuaMethodWrapper<Unit, decltype(&ACreature::getDefense), &ACreature::getDefense>::invoke, false},
 	{"isAlive", LuaMethodWrapper<Unit, decltype(&Unit::alive), &Unit::alive>::invoke, false},
 	{"unitId", LuaMethodWrapper<Unit, decltype(&IUnitInfo::unitId), &IUnitInfo::unitId>::invoke, false},
+	{"getCreatureId", unitGetCreatureId, false},
 };
 
 }

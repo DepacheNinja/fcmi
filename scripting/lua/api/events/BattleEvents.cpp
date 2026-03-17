@@ -65,6 +65,12 @@ const std::vector<ApplyDamageProxy::CustomRegType> ApplyDamageProxy::REGISTER_CU
 		LuaMethodWrapper<ApplyDamage, decltype(&ApplyDamage::getTarget), &ApplyDamage::getTarget>::invoke,
 		false
 	},
+	// FCMI: getAttacker — returns the attacking Unit proxy (for creature-type-based damage modifiers)
+	{
+		"getAttacker",
+		LuaMethodWrapper<ApplyDamage, decltype(&ApplyDamage::getAttacker), &ApplyDamage::getAttacker>::invoke,
+		false
+	},
 	// FCMI: attack metadata for WOG Luck I (206), Artillery I (201), Piercing Shot (59)
 	{
 		"isLucky",

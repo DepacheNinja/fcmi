@@ -38,12 +38,15 @@ public:
 
 	// FCMI: fire the event and update bsa.damageAmount with any script modifications
 	static void defaultExecute(const EventBus * bus, BattleStackAttacked & bsa,
-		bool luckyHit, bool rangedAttack, bool ballistaDmg, int32_t attackerOwner, std::shared_ptr<battle::Unit> target);
+		bool luckyHit, bool rangedAttack, bool ballistaDmg, int32_t attackerOwner,
+		std::shared_ptr<battle::Unit> attacker, std::shared_ptr<battle::Unit> target);
 
 	virtual int64_t getInitialDamage() const = 0;
 	virtual int64_t getDamage() const = 0;
 	virtual void setDamage(int64_t value) = 0;
 	virtual const battle::Unit * getTarget() const = 0;
+	// FCMI: returns the attacking unit (for creature-type-based damage modifiers)
+	virtual const battle::Unit * getAttacker() const = 0;
 
 	// FCMI: attack metadata — for Lucky Strike (WOG option 206), Artillery I (201), Piercing Shot (59)
 	virtual bool isLucky() const = 0;

@@ -26,18 +26,20 @@ SubscriptionRegistry<ApplyDamage> * ApplyDamage::getRegistry()
 }
 
 void ApplyDamage::defaultExecute(const EventBus * bus, BattleStackAttacked & bsa,
-	bool luckyHit, bool rangedAttack, bool ballistaDmg, int32_t attackerOwner, std::shared_ptr<battle::Unit> target)
+	bool luckyHit, bool rangedAttack, bool ballistaDmg, int32_t attackerOwner,
+	std::shared_ptr<battle::Unit> attacker, std::shared_ptr<battle::Unit> target)
 {
-	CApplyDamage event(&bsa, luckyHit, rangedAttack, ballistaDmg, attackerOwner, std::move(target));
+	CApplyDamage event(&bsa, luckyHit, rangedAttack, ballistaDmg, attackerOwner, std::move(attacker), std::move(target));
 	bus->executeEvent(event);
 }
 
-CApplyDamage::CApplyDamage(BattleStackAttacked * pack_, bool luckyHit_, bool rangedAttack_, bool ballistaDmg_, int32_t attackerOwner_, std::shared_ptr<battle::Unit> target_)
+CApplyDamage::CApplyDamage(BattleStackAttacked * pack_, bool luckyHit_, bool rangedAttack_, bool ballistaDmg_, int32_t attackerOwner_, std::shared_ptr<battle::Unit> attacker_, std::shared_ptr<battle::Unit> target_)
 	: pack(pack_),
 	luckyHit(luckyHit_),
 	rangedAttack(rangedAttack_),
 	ballistaDmg(ballistaDmg_),
 	attackerOwner(attackerOwner_),
+	attacker(std::move(attacker_)),
 	target(std::move(target_))
 {
 	initialDamage = pack->damageAmount;
@@ -66,6 +68,11 @@ void CApplyDamage::setDamage(int64_t value)
 const battle::Unit * CApplyDamage::getTarget() const
 {
 	return target.get();
+}
+
+const battle::Unit * CApplyDamage::getAttacker() const
+{
+	return attacker.get();
 }
 
 bool CApplyDamage::isLucky() const
