@@ -26,6 +26,9 @@
 #include "../../../lib/spells/CSpellHandler.h"
 #include "../../../lib/mapping/TerrainTile.h"
 #include "../../../lib/TerrainHandler.h"
+#include "../../../lib/gameState/CGameState.h"
+#include "../../../lib/mapping/CMap.h"
+#include "../../../lib/mapObjects/CGCreature.h"
 
 VCMI_LIB_NAMESPACE_BEGIN
 
@@ -247,6 +250,71 @@ int GameCbProxy::getTownFaction(lua_State * L)
 	return 1;
 }
 
+// FCMI: enumerate all map object IDs of a given Obj type group — GAME:getMapObjectIds(objTypeGroup)
+// objTypeGroup: integer Obj enum value (54=MONSTER, 17=CREATURE_GENERATOR1, 18=CG2, 19=CG3, 20=CG4)
+// Returns a Lua table of integer ObjectInstanceIDs.
+// Use GAME:getMonsterCreatureId(id) / GAME:getMonsterCount(id) to read neutral monster data.
+// Use ChangeStackCount netpack with the returned IDs to modify neutral stack sizes.
+int GameCbProxy::getMapObjectIds(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	int32_t objTypeGroup = -1;
+	if(!S.tryGet(2, objTypeGroup)) return S.retNil();
+	S.clear();
+
+	lua_newtable(L);
+	int idx = 1;
+	for(const auto * obj : object->gameState().getMap().getObjects())
+	{
+		if(obj && obj->ID.getNum() == objTypeGroup)
+		{
+			lua_pushinteger(L, obj->id.getNum());
+			lua_rawseti(L, -2, idx++);
+		}
+	}
+	return 1;
+}
+
+// FCMI: get creature ID (integer CreatureID) from a map monster — GAME:getMonsterCreatureId(objectId)
+// objectId: ObjectInstanceID integer of an Obj::MONSTER map object (from getMapObjectIds(54))
+// Returns integer creature ID, or nil if not a monster or stack is empty.
+int GameCbProxy::getMonsterCreatureId(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	ObjectInstanceID objectId;
+	if(!S.tryGet(2, objectId)) return S.retNil();
+	S.clear();
+	const auto * creature = dynamic_cast<const CGCreature*>(object->getObj(objectId, false));
+	if(!creature) return S.retNil();
+	const auto * stack = creature->getStackPtr(SlotID(0));
+	if(!stack) return S.retNil();
+	S.push(stack->getType()->getIndex());
+	return 1;
+}
+
+// FCMI: get creature count from a map monster — GAME:getMonsterCount(objectId)
+// objectId: ObjectInstanceID integer of an Obj::MONSTER map object (from getMapObjectIds(54))
+// Returns integer creature count, or nil if not a monster or stack is empty.
+int GameCbProxy::getMonsterCount(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	ObjectInstanceID objectId;
+	if(!S.tryGet(2, objectId)) return S.retNil();
+	S.clear();
+	const auto * creature = dynamic_cast<const CGCreature*>(object->getObj(objectId, false));
+	if(!creature) return S.retNil();
+	const auto * stack = creature->getStackPtr(SlotID(0));
+	if(!stack) return S.retNil();
+	S.push(static_cast<int32_t>(stack->count));
+	return 1;
+}
+
 VCMI_REGISTER_CORE_SCRIPT_API(GameCbProxy, "Game");
 
 const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
@@ -267,6 +335,9 @@ const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
 	{"getTownFaction", &GameCbProxy::getTownFaction, false},
 	{"getHeroPosition", &GameCbProxy::getHeroPosition, false},
 	{"getTerrainAt", &GameCbProxy::getTerrainAt, false},
+	{"getMapObjectIds", &GameCbProxy::getMapObjectIds, false},
+	{"getMonsterCreatureId", &GameCbProxy::getMonsterCreatureId, false},
+	{"getMonsterCount", &GameCbProxy::getMonsterCount, false},
 };
 
 }

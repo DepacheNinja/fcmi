@@ -44,6 +44,12 @@ public:
 	static int getHeroPosition(lua_State * L);
 	// FCMI: get terrain ID at map coordinates (returns integer TerrainId)
 	static int getTerrainAt(lua_State * L);
+	// FCMI: get all map object IDs of a given Obj type group (e.g. 54=MONSTER, 17=CREATURE_GENERATOR1)
+	static int getMapObjectIds(lua_State * L);
+	// FCMI: get the creature ID from a map monster object (Obj::MONSTER, slot 0)
+	static int getMonsterCreatureId(lua_State * L);
+	// FCMI: get the creature count from a map monster object (Obj::MONSTER, slot 0)
+	static int getMonsterCount(lua_State * L);
 };
 
 }
