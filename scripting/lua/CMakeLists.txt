@@ -36,6 +36,8 @@ set(lib_SRCS
 		api/netpacks/GiveHero.cpp
 		api/netpacks/GiveHeroArtifact.cpp
 		api/netpacks/EraseHeroArtifact.cpp
+		api/netpacks/BlockingDialog.cpp
+		api/netpacks/RemoveMapObject.cpp
 
 		api/Artifact.cpp
 		api/BattleCb.cpp
@@ -94,6 +96,8 @@ set(lib_HDRS
 		api/netpacks/GiveHero.h
 		api/netpacks/GiveHeroArtifact.h
 		api/netpacks/EraseHeroArtifact.h
+		api/netpacks/BlockingDialog.h
+		api/netpacks/RemoveMapObject.h
 
 		api/Artifact.h
 		api/BattleCb.h

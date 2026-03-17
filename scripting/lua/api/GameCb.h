@@ -67,6 +67,10 @@ public:
 	static int getHeroTypeId(lua_State * L);
 	// FCMI: get position of any map object by ObjectInstanceID — returns x, y, z integers
 	static int getObjectPosition(lua_State * L);
+	// FCMI: get the resource type produced by a mine — GAME:getMineResource(objId) → int (0-6), or -1
+	static int getMineResource(lua_State * L);
+	// FCMI: get the owner player index of a map object — GAME:getObjectOwner(objId) → int (-1 if neutral)
+	static int getObjectOwner(lua_State * L);
 };
 
 }

@@ -125,6 +125,7 @@ set(lib_MAIN_SRCS
 	events/ObjectVisitEnded.cpp
 	events/ObjectVisitStarted.cpp
 	events/PlayerGotTurn.cpp
+	events/QueryReplied.cpp
 	events/TurnStarted.cpp
 
 	json/JsonBonus.cpp
@@ -421,6 +422,7 @@ set(lib_MAIN_HEADERS
 	../include/vcmi/events/ObjectVisitEnded.h
 	../include/vcmi/events/ObjectVisitStarted.h
 	../include/vcmi/events/PlayerGotTurn.h
+	../include/vcmi/events/QueryReplied.h
 	../include/vcmi/events/SubscriptionRegistry.h
 	../include/vcmi/events/TurnStarted.h
 
@@ -563,6 +565,7 @@ set(lib_MAIN_HEADERS
 	events/ObjectVisitEnded.h
 	events/ObjectVisitStarted.h
 	events/PlayerGotTurn.h
+	events/QueryReplied.h
 	events/TurnStarted.h
 
 	json/JsonBonus.h

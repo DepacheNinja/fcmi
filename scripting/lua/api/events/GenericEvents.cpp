@@ -29,6 +29,7 @@ using ::events::GameResumed;
 using ::events::HeroHired;
 using ::events::HeroLevelUp;
 using ::events::PlayerGotTurn;
+using ::events::QueryReplied;
 using ::events::TurnStarted;
 
 VCMI_REGISTER_SCRIPT_API(BuildingBuiltProxy, "events.BuildingBuilt");
@@ -36,6 +37,7 @@ VCMI_REGISTER_SCRIPT_API(GameResumedProxy, "events.GameResumed");
 VCMI_REGISTER_SCRIPT_API(HeroHiredProxy, "events.HeroHired");
 VCMI_REGISTER_SCRIPT_API(HeroLevelUpProxy, "events.HeroLevelUp");
 VCMI_REGISTER_SCRIPT_API(PlayerGotTurnProxy, "events.PlayerGotTurn");
+VCMI_REGISTER_SCRIPT_API(QueryRepliedProxy, "events.QueryReplied");
 VCMI_REGISTER_SCRIPT_API(TurnStartedProxy, "events.TurnStarted");
 
 const std::vector<GameResumedProxy::CustomRegType> GameResumedProxy::REGISTER_CUSTOM =
@@ -115,6 +117,14 @@ const std::vector<HeroLevelUpProxy::CustomRegType> HeroLevelUpProxy::REGISTER_CU
 	{"getHero", LuaMethodWrapper<HeroLevelUp, decltype(&HeroLevelUp::getHero), &HeroLevelUp::getHero>::invoke, false},
 	{"getLevel", LuaMethodWrapper<HeroLevelUp, decltype(&HeroLevelUp::getLevel), &HeroLevelUp::getLevel>::invoke, false},
 	{"getPrimarySkillGained", LuaMethodWrapper<HeroLevelUp, decltype(&HeroLevelUp::getPrimarySkillGained), &HeroLevelUp::getPrimarySkillGained>::invoke, false},
+};
+
+const std::vector<QueryRepliedProxy::CustomRegType> QueryRepliedProxy::REGISTER_CUSTOM =
+{
+	{"subscribeBefore", &SubscriptionRegistryProxy<QueryRepliedProxy>::subscribeBefore, true},
+	{"subscribeAfter", &SubscriptionRegistryProxy<QueryRepliedProxy>::subscribeAfter, true},
+	{"getQueryId", LuaMethodWrapper<QueryReplied, decltype(&QueryReplied::getQueryId), &QueryReplied::getQueryId>::invoke, false},
+	{"getReply", LuaMethodWrapper<QueryReplied, decltype(&QueryReplied::getReply), &QueryReplied::getReply>::invoke, false},
 };
 
 }

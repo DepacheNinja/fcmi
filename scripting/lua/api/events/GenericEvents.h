@@ -67,6 +67,13 @@ public:
 	static const std::vector<typename Wrapper::CustomRegType> REGISTER_CUSTOM;
 };
 
+class QueryRepliedProxy : public OpaqueWrapper<::events::QueryReplied, QueryRepliedProxy>
+{
+public:
+	using Wrapper = OpaqueWrapper<::events::QueryReplied, QueryRepliedProxy>;
+	static const std::vector<typename Wrapper::CustomRegType> REGISTER_CUSTOM;
+};
+
 }
 }
 }

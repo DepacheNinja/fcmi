@@ -16,3 +16,4 @@
 #include "HeroLevelUp.h"
 #include "PlayerGotTurn.h"
 #include "TurnStarted.h"
+#include "QueryReplied.h"

@@ -30,6 +30,7 @@
 #include "../../../lib/mapping/CMap.h"
 #include "../../../lib/mapObjects/CGCreature.h"
 #include "../../../lib/mapObjects/CGDwelling.h"
+#include "../../../lib/mapObjects/MiscObjects.h"
 #include "../../../lib/battle/BattleInfo.h"
 #include "../../../lib/CStack.h"
 #include "../../../lib/battle/CBattleInfoEssentials.h"
@@ -457,6 +458,47 @@ int GameCbProxy::getObjectPosition(lua_State * L)
 	return 3;
 }
 
+// FCMI: get the resource type produced by a mine — GAME:getMineResource(objId)
+// Returns integer resource type (0=wood..6=gold), or -1 if the object is not a mine.
+int GameCbProxy::getMineResource(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	ObjectInstanceID objId;
+	if(!S.tryGet(2, objId)) return S.retNil();
+	S.clear();
+	const auto * mine = dynamic_cast<const CGMine*>(object->getObj(objId, false));
+	if(!mine)
+	{
+		S.push(static_cast<int32_t>(-1));
+		return 1;
+	}
+	S.push(static_cast<int32_t>(mine->producedResource.getNum()));
+	return 1;
+}
+
+// FCMI: get the owner player index of a map object — GAME:getObjectOwner(objId)
+// Returns integer player index (0-7), or -1 if neutral/unowned.
+int GameCbProxy::getObjectOwner(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	ObjectInstanceID objId;
+	if(!S.tryGet(2, objId)) return S.retNil();
+	S.clear();
+	const auto * obj = object->getObj(objId, false);
+	if(!obj) return S.retNil();
+	if(obj->tempOwner == PlayerColor::NEUTRAL || !obj->tempOwner.isValidPlayer())
+	{
+		S.push(static_cast<int32_t>(-1));
+		return 1;
+	}
+	S.push(static_cast<int32_t>(obj->tempOwner.getNum()));
+	return 1;
+}
+
 VCMI_REGISTER_CORE_SCRIPT_API(GameCbProxy, "Game");
 
 const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
@@ -486,6 +528,8 @@ const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
 	{"getBattleStacks", &GameCbProxy::getBattleStacks, false},
 	{"getHeroTypeId", &GameCbProxy::getHeroTypeId, false},
 	{"getObjectPosition", &GameCbProxy::getObjectPosition, false},
+	{"getMineResource", &GameCbProxy::getMineResource, false},
+	{"getObjectOwner", &GameCbProxy::getObjectOwner, false},
 };
 
 }

@@ -3403,6 +3403,11 @@ bool CGameHandler::queryReply(QueryID qid, std::optional<int32_t> answer, Player
 
 	topQuery->setReply(answer);
 	queries->popQuery(topQuery);
+
+	// FCMI: fire QueryReplied event so Lua scripts can react to blocking dialog answers
+	int32_t replyVal = answer.has_value() ? answer.value() : 0;
+	events::QueryReplied::defaultExecute(serverEventBus.get(), qid.getNum(), replyVal);
+
 	return true;
 }
 
