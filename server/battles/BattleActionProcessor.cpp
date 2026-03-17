@@ -1561,7 +1561,7 @@ void BattleActionProcessor::applyBattleEffects(const CBattleInfoCallback & battl
 	{
 		events::ApplyDamage::defaultExecute(gameHandler->eventBus(), bsa,
 			bat.lucky(), bat.shot(), bat.ballistaDoubleDmg(),
-			attackerState->getOwner().getNum(), def->acquireState());
+			attackerState->unitOwner().getNum(), def->acquireState());
 	}
 
 	bat.bsa.push_back(bsa); //add this stack to the list of victims after drain life has been calculated
