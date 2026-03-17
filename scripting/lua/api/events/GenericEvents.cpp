@@ -24,12 +24,14 @@ namespace api
 {
 namespace events
 {
+using ::events::BuildingBuilt;
 using ::events::GameResumed;
 using ::events::HeroHired;
 using ::events::HeroLevelUp;
 using ::events::PlayerGotTurn;
 using ::events::TurnStarted;
 
+VCMI_REGISTER_SCRIPT_API(BuildingBuiltProxy, "events.BuildingBuilt");
 VCMI_REGISTER_SCRIPT_API(GameResumedProxy, "events.GameResumed");
 VCMI_REGISTER_SCRIPT_API(HeroHiredProxy, "events.HeroHired");
 VCMI_REGISTER_SCRIPT_API(HeroLevelUpProxy, "events.HeroLevelUp");
@@ -86,6 +88,15 @@ const std::vector<TurnStartedProxy::CustomRegType> TurnStartedProxy::REGISTER_CU
 		&SubscriptionRegistryProxy<TurnStartedProxy>::subscribeAfter,
 		true
 	}
+};
+
+const std::vector<BuildingBuiltProxy::CustomRegType> BuildingBuiltProxy::REGISTER_CUSTOM =
+{
+	{"subscribeBefore", &SubscriptionRegistryProxy<BuildingBuiltProxy>::subscribeBefore, true},
+	{"subscribeAfter",  &SubscriptionRegistryProxy<BuildingBuiltProxy>::subscribeAfter,  true},
+	{"getPlayer",   LuaMethodWrapper<BuildingBuilt, decltype(&BuildingBuilt::getPlayerIndex), &BuildingBuilt::getPlayerIndex>::invoke, false},
+	{"getTown",     LuaMethodWrapper<BuildingBuilt, decltype(&BuildingBuilt::getTown),        &BuildingBuilt::getTown>::invoke,        false},
+	{"getBuilding", LuaMethodWrapper<BuildingBuilt, decltype(&BuildingBuilt::getBuilding),    &BuildingBuilt::getBuilding>::invoke,    false},
 };
 
 const std::vector<HeroHiredProxy::CustomRegType> HeroHiredProxy::REGISTER_CUSTOM =

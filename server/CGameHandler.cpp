@@ -2245,6 +2245,10 @@ bool CGameHandler::buildStructure(ObjectInstanceID tid, BuildingID requestedID, 
 	//We know what has been built, apply changes. Do this as final step to properly update town window
 	sendAndApply(ns);
 
+	// Fire BuildingBuilt scripting event for each newly constructed building
+	for(auto buildingID : ns.bid)
+		events::BuildingBuilt::defaultExecute(serverEventBus.get(), t->tempOwner, t->id, buildingID.getNum());
+
 	//Other post-built events. To some logic like giving spells to work gamestate changes for new building must be already in place!
 	for(auto buildingID : ns.bid)
 	{

@@ -118,6 +118,7 @@ set(lib_MAIN_SRCS
 	events/ApplyDamage.cpp
 	events/BattleEnded.cpp
 	events/BattleStarted.cpp
+	events/BuildingBuilt.cpp
 	events/GameResumed.cpp
 	events/HeroHired.cpp
 	events/HeroLevelUp.cpp
@@ -412,6 +413,7 @@ set(lib_MAIN_HEADERS
 	../include/vcmi/events/BattleStarted.h
 	../include/vcmi/events/Event.h
 	../include/vcmi/events/EventBus.h
+	../include/vcmi/events/BuildingBuilt.h
 	../include/vcmi/events/GameResumed.h
 	../include/vcmi/events/GenericEvents.h
 	../include/vcmi/events/HeroHired.h
@@ -554,6 +556,7 @@ set(lib_MAIN_HEADERS
 
 	events/ApplyDamage.h
 	events/BattleEnded.h
+	events/BuildingBuilt.h
 	events/GameResumed.h
 	events/HeroHired.h
 	events/HeroLevelUp.h

@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include "BuildingBuilt.h"
 #include "GameResumed.h"
 #include "HeroHired.h"
 #include "HeroLevelUp.h"

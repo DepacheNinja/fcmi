@@ -25,6 +25,13 @@ namespace api
 namespace events
 {
 
+class BuildingBuiltProxy : public OpaqueWrapper<::events::BuildingBuilt, BuildingBuiltProxy>
+{
+public:
+	using Wrapper = OpaqueWrapper<::events::BuildingBuilt, BuildingBuiltProxy>;
+	static const std::vector<typename Wrapper::CustomRegType> REGISTER_CUSTOM;
+};
+
 class GameResumedProxy : public OpaqueWrapper<::events::GameResumed, GameResumedProxy>
 {
 public:
