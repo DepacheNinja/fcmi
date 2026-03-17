@@ -358,6 +358,22 @@ int GameCbProxy::getDwellingCreatureCount(lua_State * L)
 	return 1;
 }
 
+// FCMI: resolve creature identifier string → integer CreatureID
+// GAME:getCreatureIdByIdentifier("core:serpentFly") or "wake-of-gods.creatures:ghost"
+// Returns integer CreatureID, or -1 if not found.
+int GameCbProxy::getCreatureIdByIdentifier(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	std::string identifier;
+	if(!S.tryGet(2, identifier)) return S.retNil();
+	S.clear();
+	si32 id = CreatureID::decode(identifier);
+	S.push(id);
+	return 1;
+}
+
 VCMI_REGISTER_CORE_SCRIPT_API(GameCbProxy, "Game");
 
 const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
@@ -383,6 +399,7 @@ const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
 	{"getMonsterCount", &GameCbProxy::getMonsterCount, false},
 	{"getDwellingCreatureId", &GameCbProxy::getDwellingCreatureId, false},
 	{"getDwellingCreatureCount", &GameCbProxy::getDwellingCreatureCount, false},
+	{"getCreatureIdByIdentifier", &GameCbProxy::getCreatureIdByIdentifier, false},
 };
 
 }

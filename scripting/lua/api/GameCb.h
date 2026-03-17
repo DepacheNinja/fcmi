@@ -56,6 +56,10 @@ public:
 	// FCMI: get the creature count offered by a dwelling at a given level
 	// Returns creatures[level].first (available count), or 0 if unavailable.
 	static int getDwellingCreatureCount(lua_State * L);
+	// FCMI: resolve a creature string identifier to its integer CreatureID
+	// Example: GAME:getCreatureIdByIdentifier("core:serpentFly") or "wake-of-gods.creatures:ghost"
+	// Returns integer CreatureID, or -1 if not found.
+	static int getCreatureIdByIdentifier(lua_State * L);
 };
 
 }
