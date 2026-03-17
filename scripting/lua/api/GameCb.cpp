@@ -97,30 +97,6 @@ int GameCbProxy::getPlayerHeroes(lua_State * L)
 	return 1;
 }
 
-VCMI_REGISTER_CORE_SCRIPT_API(GameCbProxy, "Game");
-
-const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
-{
-	{"getDate", LuaMethodWrapper<GameCb, decltype(&GameCb::getDate), &GameCb::getDate>::invoke, false},
-
-	{"getHero", LuaMethodWrapper<GameCb, decltype(&GameCb::getHero), &GameCb::getHero>::invoke, false},
-
-	{"getObj", LuaMethodWrapper<GameCb, decltype(&GameCb::getObj), &GameCb::getObj>::invoke, false},
-
-	// FCMI additions: player resource, human check, and hero iteration for WOG Lua scripts
-	{"getPlayerResource", &GameCbProxy::getPlayerResource, false},
-	{"isPlayerHuman", &GameCbProxy::isPlayerHuman, false},
-	{"getPlayerHeroes", &GameCbProxy::getPlayerHeroes, false},
-	{"getSpellsByLevel", &GameCbProxy::getSpellsByLevel, false},
-	{"getPlayerTowns", &GameCbProxy::getPlayerTowns, false},
-	{"townHasBuilding", &GameCbProxy::townHasBuilding, false},
-};
-
-}
-}
-
-VCMI_LIB_NAMESPACE_END
-
 // FCMI: get all spell IDs of a given school level — GAME:getSpellsByLevel(level)
 // level: 1-5 (spell school level)
 // Returns a Lua table of integer spell IDs (SpellID values).
@@ -201,3 +177,27 @@ int GameCbProxy::townHasBuilding(lua_State * L)
 	S.push(town->hasBuilt(BuildingID(buildingSubID)));
 	return 1;
 }
+
+VCMI_REGISTER_CORE_SCRIPT_API(GameCbProxy, "Game");
+
+const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
+{
+	{"getDate", LuaMethodWrapper<GameCb, decltype(&GameCb::getDate), &GameCb::getDate>::invoke, false},
+
+	{"getHero", LuaMethodWrapper<GameCb, decltype(&GameCb::getHero), &GameCb::getHero>::invoke, false},
+
+	{"getObj", LuaMethodWrapper<GameCb, decltype(&GameCb::getObj), &GameCb::getObj>::invoke, false},
+
+	// FCMI additions: player resource, human check, and hero iteration for WOG Lua scripts
+	{"getPlayerResource", &GameCbProxy::getPlayerResource, false},
+	{"isPlayerHuman", &GameCbProxy::isPlayerHuman, false},
+	{"getPlayerHeroes", &GameCbProxy::getPlayerHeroes, false},
+	{"getSpellsByLevel", &GameCbProxy::getSpellsByLevel, false},
+	{"getPlayerTowns", &GameCbProxy::getPlayerTowns, false},
+	{"townHasBuilding", &GameCbProxy::townHasBuilding, false},
+};
+
+}
+}
+
+VCMI_LIB_NAMESPACE_END

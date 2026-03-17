@@ -48,6 +48,28 @@ static int heroGetDefense(lua_State * L)
 	return 1;
 }
 
+static int heroHasSpell(lua_State * L)
+{
+	LuaStack S(L);
+	const CGHeroInstance * hero = nullptr;
+	if(!S.tryGet(1, hero)) return S.retNil();
+	int32_t spellId = -1;
+	if(!S.tryGet(2, spellId)) return S.retNil();
+	S.clear();
+	S.push(hero->spellbookContainsSpell(SpellID(spellId)));
+	return 1;
+}
+
+static int heroHasSpellbook(lua_State * L)
+{
+	LuaStack S(L);
+	const CGHeroInstance * hero = nullptr;
+	if(!S.tryGet(1, hero)) return S.retNil();
+	S.clear();
+	S.push(hero->hasSpellbook());
+	return 1;
+}
+
 const std::vector<HeroInstanceProxy::CustomRegType> HeroInstanceProxy::REGISTER_CUSTOM =
 {
 	{"getStack", LuaMethodWrapper<CGHeroInstance, decltype(&CCreatureSet::getStackPtr), &CCreatureSet::getStackPtr>::invoke, false},
@@ -72,25 +94,3 @@ const std::vector<HeroInstanceProxy::CustomRegType> HeroInstanceProxy::REGISTER_
 }
 
 VCMI_LIB_NAMESPACE_END
-
-static int heroHasSpell(lua_State * L)
-{
-	LuaStack S(L);
-	const CGHeroInstance * hero = nullptr;
-	if(!S.tryGet(1, hero)) return S.retNil();
-	int32_t spellId = -1;
-	if(!S.tryGet(2, spellId)) return S.retNil();
-	S.clear();
-	S.push(hero->spellbookContainsSpell(SpellID(spellId)));
-	return 1;
-}
-
-static int heroHasSpellbook(lua_State * L)
-{
-	LuaStack S(L);
-	const CGHeroInstance * hero = nullptr;
-	if(!S.tryGet(1, hero)) return S.retNil();
-	S.clear();
-	S.push(hero->hasSpellbook());
-	return 1;
-}
