@@ -117,6 +117,7 @@ set(lib_MAIN_SRCS
 
 	events/ApplyDamage.cpp
 	events/BattleEnded.cpp
+	events/BattleRoundStarted.cpp
 	events/BattleStarted.cpp
 	events/BuildingBuilt.cpp
 	events/GameResumed.cpp
@@ -411,6 +412,7 @@ set(lib_MAIN_HEADERS
 	../include/vcmi/events/ApplyDamage.h
 	../include/vcmi/events/BattleEnded.h
 	../include/vcmi/events/BattleEvents.h
+	../include/vcmi/events/BattleRoundStarted.h
 	../include/vcmi/events/BattleStarted.h
 	../include/vcmi/events/Event.h
 	../include/vcmi/events/EventBus.h

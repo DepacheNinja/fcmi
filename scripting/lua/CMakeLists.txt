@@ -28,6 +28,7 @@ set(lib_SRCS
 		api/netpacks/SetSecSkill.cpp
 		api/netpacks/InsertNewStack.cpp
 		api/netpacks/ChangeStackCount.cpp
+		api/netpacks/SetStackType.cpp
 		api/netpacks/NewStructures.cpp
 		api/netpacks/SetAvailableCreatures.cpp
 		api/netpacks/SetStackEffect.cpp
@@ -88,6 +89,7 @@ set(lib_HDRS
 		api/netpacks/SetSecSkill.h
 		api/netpacks/InsertNewStack.h
 		api/netpacks/ChangeStackCount.h
+		api/netpacks/SetStackType.h
 		api/netpacks/NewStructures.h
 		api/netpacks/SetAvailableCreatures.h
 		api/netpacks/SetStackEffect.h

@@ -21,6 +21,7 @@
 #include "../../lib/bonuses/BonusParameters.h"
 #include "../../lib/callback/GameRandomizer.h"
 #include "../../lib/entities/building/TownFortifications.h"
+#include "../../lib/events/BattleRoundStarted.h"
 #include "../../lib/events/BattleStarted.h"
 #include "../../lib/mapObjects/CGTownInstance.h"
 #include "../../lib/networkPacks/PacksForClientBattle.h"
@@ -274,6 +275,11 @@ void BattleFlowProcessor::startNextRound(const CBattleInfoCallback & battle, boo
 	bnr.battleID = battle.getBattle()->getBattleID();
 	logGlobal->debug("Next round starts");
 	gameHandler->sendAndApply(bnr);
+
+	// FCMI: fire BattleRoundStarted event for Lua scripts (e.g. ammo cart mana recovery)
+	events::BattleRoundStarted::defaultExecute(gameHandler->eventBus(),
+		battle.getBattle()->getBattleID(),
+		battle.getBattle()->getRound());
 
 	// operate on copy - removing obstacles will invalidate iterator on 'battle' container
 	auto obstacles = battle.battleGetAllObstacles();

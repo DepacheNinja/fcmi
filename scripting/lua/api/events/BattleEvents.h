@@ -39,6 +39,13 @@ public:
 	static const std::vector<typename Wrapper::CustomRegType> REGISTER_CUSTOM;
 };
 
+class BattleRoundStartedProxy : public OpaqueWrapper<::events::BattleRoundStarted, BattleRoundStartedProxy>
+{
+public:
+	using Wrapper = OpaqueWrapper<::events::BattleRoundStarted, BattleRoundStartedProxy>;
+	static const std::vector<typename Wrapper::CustomRegType> REGISTER_CUSTOM;
+};
+
 class BattleStartedProxy : public OpaqueWrapper<::events::BattleStarted, BattleStartedProxy>
 {
 public:

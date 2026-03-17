@@ -27,10 +27,12 @@ namespace events
 {
 using ::events::ApplyDamage;
 using ::events::BattleEnded;
+using ::events::BattleRoundStarted;
 using ::events::BattleStarted;
 
 VCMI_REGISTER_SCRIPT_API(ApplyDamageProxy, "events.ApplyDamage");
 VCMI_REGISTER_SCRIPT_API(BattleEndedProxy, "events.BattleEnded");
+VCMI_REGISTER_SCRIPT_API(BattleRoundStartedProxy, "events.BattleRoundStarted");
 VCMI_REGISTER_SCRIPT_API(BattleStartedProxy, "events.BattleStarted");
 
 const std::vector<ApplyDamageProxy::CustomRegType> ApplyDamageProxy::REGISTER_CUSTOM =
@@ -105,6 +107,14 @@ const std::vector<BattleEndedProxy::CustomRegType> BattleEndedProxy::REGISTER_CU
 	{"getExpAwarded", LuaMethodWrapper<BattleEnded, decltype(&BattleEnded::getExpAwarded), &BattleEnded::getExpAwarded>::invoke, false},
 	// FCMI: 0=NORMAL, 1=ESCAPE, 2=SURRENDER — lets Lua detect how the battle ended
 	{"getBattleResult", LuaMethodWrapper<BattleEnded, decltype(&BattleEnded::getBattleResult), &BattleEnded::getBattleResult>::invoke, false},
+};
+
+const std::vector<BattleRoundStartedProxy::CustomRegType> BattleRoundStartedProxy::REGISTER_CUSTOM =
+{
+	{"subscribeBefore", &SubscriptionRegistryProxy<BattleRoundStartedProxy>::subscribeBefore, true},
+	{"subscribeAfter",  &SubscriptionRegistryProxy<BattleRoundStartedProxy>::subscribeAfter,  true},
+	{"getBattleId", LuaMethodWrapper<BattleRoundStarted, decltype(&BattleRoundStarted::getBattleId), &BattleRoundStarted::getBattleId>::invoke, false},
+	{"getRound", LuaMethodWrapper<BattleRoundStarted, decltype(&BattleRoundStarted::getRound), &BattleRoundStarted::getRound>::invoke, false},
 };
 
 const std::vector<BattleStartedProxy::CustomRegType> BattleStartedProxy::REGISTER_CUSTOM =
