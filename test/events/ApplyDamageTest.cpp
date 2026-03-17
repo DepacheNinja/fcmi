@@ -57,7 +57,7 @@ TEST_F(ApplyDamageTest, Subscription)
 
 	BattleStackAttacked pack;
 
-	CApplyDamage event(&pack, false, false, false, -1, targetMock);
+	CApplyDamage event(&pack, false, false, false, -1, nullptr, targetMock);
 
 	eventBus.executeEvent(event);
 }

@@ -231,7 +231,7 @@ int GameCbProxy::getTerrainAt(lua_State * L)
 	if(!tile) return S.retNil();
 	const auto * terrain = tile->getTerrainID().toEntity(LIBRARY);
 	if(!terrain) return S.retNil();
-	S.push(terrain->identifier);
+	S.push(terrain->getJsonKey());
 	return 1;
 }
 
@@ -315,7 +315,7 @@ int GameCbProxy::getMonsterCount(lua_State * L)
 	if(!creature) return S.retNil();
 	const auto * stack = creature->getStackPtr(SlotID(0));
 	if(!stack) return S.retNil();
-	S.push(static_cast<int32_t>(stack->count));
+	S.push(static_cast<int32_t>(stack->getCount()));
 	return 1;
 }
 
@@ -408,7 +408,7 @@ int GameCbProxy::getBattleStacks(lua_State * L)
 		lua_newtable(L);
 		lua_pushinteger(L, static_cast<lua_Integer>(stack->unitId()));
 		lua_setfield(L, -2, "unitId");
-		lua_pushinteger(L, static_cast<lua_Integer>(stack->side == BattleSide::ATTACKER ? 0 : 1));
+		lua_pushinteger(L, static_cast<lua_Integer>(stack->unitSide() == BattleSide::ATTACKER ? 0 : 1));
 		lua_setfield(L, -2, "side");
 		lua_pushinteger(L, static_cast<lua_Integer>(type->getIndex()));
 		lua_setfield(L, -2, "creatureId");
