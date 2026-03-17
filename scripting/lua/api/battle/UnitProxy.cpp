@@ -40,6 +40,22 @@ static int unitGetCreatureId(lua_State * L)
 	return 1;
 }
 
+// FCMI: hasBonusFromSpell(spellId) — returns true if the unit currently has an
+// active bonus sourced from the given spell (by integer SpellID index).
+// Use to check whether a Protection/buff spell is active on a unit in ApplyDamage handlers.
+// Example: unit:hasBonusFromSpell(31) checks for active "Protection from Fire" (index 31).
+static int unitHasBonusFromSpell(lua_State * L)
+{
+	LuaStack S(L);
+	const Unit * unit = nullptr;
+	int32_t spellId = -1;
+	if(!S.tryGet(1, unit)) return S.retNil();
+	if(!S.tryGet(2, spellId)) return S.retNil();
+	S.clear();
+	S.push(unit->getBonusBearer()->hasBonusFrom(BonusSource::SPELL_EFFECT, BonusSourceID(SpellID(spellId))));
+	return 1;
+}
+
 const std::vector<UnitProxy::CustomRegType> UnitProxy::REGISTER_CUSTOM =
 {
 	{"getMinDamage", LuaMethodWrapper<Unit, decltype(&ACreature::getMinDamage), &ACreature::getMinDamage>::invoke, false},
@@ -49,6 +65,7 @@ const std::vector<UnitProxy::CustomRegType> UnitProxy::REGISTER_CUSTOM =
 	{"isAlive", LuaMethodWrapper<Unit, decltype(&Unit::alive), &Unit::alive>::invoke, false},
 	{"unitId", LuaMethodWrapper<Unit, decltype(&IUnitInfo::unitId), &IUnitInfo::unitId>::invoke, false},
 	{"getCreatureId", unitGetCreatureId, false},
+	{"hasBonusFromSpell", unitHasBonusFromSpell, false},
 };
 
 }
