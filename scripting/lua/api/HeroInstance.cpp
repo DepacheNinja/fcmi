@@ -24,14 +24,37 @@ namespace api
 {
 VCMI_REGISTER_CORE_SCRIPT_API(HeroInstanceProxy, "HeroInstance");
 
+// Static wrappers for primary stats — AFactionMember has virtual getAttack(bool)/getDefense(bool)
+// with different signatures, so we can't add getAttack()/getDefense() to CGHeroInstance without
+// hiding the virtual. Use free wrappers calling getPrimSkillLevel() directly instead.
+static int heroGetAttack(lua_State * L)
+{
+	LuaStack S(L);
+	const CGHeroInstance * hero = nullptr;
+	if(!S.tryGet(1, hero)) return S.retNil();
+	S.clear();
+	S.push(hero->getPrimSkillLevel(PrimarySkill::ATTACK));
+	return 1;
+}
+
+static int heroGetDefense(lua_State * L)
+{
+	LuaStack S(L);
+	const CGHeroInstance * hero = nullptr;
+	if(!S.tryGet(1, hero)) return S.retNil();
+	S.clear();
+	S.push(hero->getPrimSkillLevel(PrimarySkill::DEFENSE));
+	return 1;
+}
+
 const std::vector<HeroInstanceProxy::CustomRegType> HeroInstanceProxy::REGISTER_CUSTOM =
 {
 	{"getStack", LuaMethodWrapper<CGHeroInstance, decltype(&CCreatureSet::getStackPtr), &CCreatureSet::getStackPtr>::invoke, false},
 	{"getOwner", LuaMethodWrapper<CGHeroInstance, decltype(&CGObjectInstance::getOwner), &CGObjectInstance::getOwner>::invoke, false},
 	{"getLevel", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getLevel), &CGHeroInstance::getLevel>::invoke, false},
 	{"getExperience", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getExp), &CGHeroInstance::getExp>::invoke, false},
-	{"getAttack", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getAttack), &CGHeroInstance::getAttack>::invoke, false},
-	{"getDefense", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getDefense), &CGHeroInstance::getDefense>::invoke, false},
+	{"getAttack", heroGetAttack, false},
+	{"getDefense", heroGetDefense, false},
 	{"getSpellPower", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getSpellPower), &CGHeroInstance::getSpellPower>::invoke, false},
 	{"getKnowledge", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getKnowledge), &CGHeroInstance::getKnowledge>::invoke, false},
 	{"getPrimSkillLevel", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getPrimSkillLevel), &CGHeroInstance::getPrimSkillLevel>::invoke, false},
