@@ -45,6 +45,7 @@
 #include "../filesystem/ResourcePath.h"
 #include "../json/JsonBonus.h"
 #include "../json/JsonUtils.h"
+#include "../CCreatureHandler.h"
 #include "../mapObjectConstructors/AObjectTypeHandler.h"
 #include "../mapObjectConstructors/CObjectClassesHandler.h"
 #include "../mapObjectConstructors/DwellingInstanceConstructor.h"
@@ -237,6 +238,22 @@ void CGameState::updateEntity(Metatype metatype, int32_t index, const JsonNode &
 {
 	switch(metatype)
 	{
+	case Metatype::CREATURE:
+	{
+		if(index < 0 || static_cast<size_t>(index) >= LIBRARY->creh->objects.size())
+		{
+			logGlobal->error("Update entity: creature index %d is out of range", index);
+			break;
+		}
+		auto & creature = LIBRARY->creh->objects.at(index);
+		if(!creature)
+		{
+			logGlobal->error("Update entity: creature index %d is null", index);
+			break;
+		}
+		creature->updateFrom(data);
+		break;
+	}
 	case Metatype::ARTIFACT_INSTANCE:
 		logGlobal->error("Artifact instance update is not implemented");
 		break;
