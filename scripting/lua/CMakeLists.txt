@@ -29,6 +29,7 @@ set(lib_SRCS
 		api/netpacks/InsertNewStack.cpp
 		api/netpacks/ChangeStackCount.cpp
 		api/netpacks/NewStructures.cpp
+		api/netpacks/SetAvailableCreatures.cpp
 
 		api/Artifact.cpp
 		api/BattleCb.cpp
@@ -80,6 +81,7 @@ set(lib_HDRS
 		api/netpacks/InsertNewStack.h
 		api/netpacks/ChangeStackCount.h
 		api/netpacks/NewStructures.h
+		api/netpacks/SetAvailableCreatures.h
 
 		api/Artifact.h
 		api/BattleCb.h

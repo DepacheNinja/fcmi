@@ -29,6 +29,7 @@
 #include "../../../lib/gameState/CGameState.h"
 #include "../../../lib/mapping/CMap.h"
 #include "../../../lib/mapObjects/CGCreature.h"
+#include "../../../lib/mapObjects/CGDwelling.h"
 
 VCMI_LIB_NAMESPACE_BEGIN
 
@@ -315,6 +316,48 @@ int GameCbProxy::getMonsterCount(lua_State * L)
 	return 1;
 }
 
+// FCMI: get creature ID from a dwelling at a given level — GAME:getDwellingCreatureId(objectId, level)
+// objectId: ObjectInstanceID of a CGDwelling map object (e.g. Refugee Camp, Obj::REFUGEE_CAMP=78)
+// level: 0-based creature tier level within the dwelling (Refugee Camps use level 0)
+// Returns integer CreatureID of the first creature offered at that level, or nil if unavailable.
+int GameCbProxy::getDwellingCreatureId(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	ObjectInstanceID objectId;
+	if(!S.tryGet(2, objectId)) return S.retNil();
+	int32_t level = 0;
+	S.tryGet(3, level);
+	S.clear();
+	const auto * dwelling = dynamic_cast<const CGDwelling*>(object->getObj(objectId, false));
+	if(!dwelling) return S.retNil();
+	if(level < 0 || level >= static_cast<int32_t>(dwelling->creatures.size())) return S.retNil();
+	const auto & levelData = dwelling->creatures[level];
+	if(levelData.second.empty()) return S.retNil();
+	S.push(levelData.second[0].num);
+	return 1;
+}
+
+// FCMI: get available creature count from a dwelling at a given level — GAME:getDwellingCreatureCount(objectId, level)
+// Returns integer count of creatures available to recruit at that level, or 0 if unavailable.
+int GameCbProxy::getDwellingCreatureCount(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	ObjectInstanceID objectId;
+	if(!S.tryGet(2, objectId)) return S.retNil();
+	int32_t level = 0;
+	S.tryGet(3, level);
+	S.clear();
+	const auto * dwelling = dynamic_cast<const CGDwelling*>(object->getObj(objectId, false));
+	if(!dwelling) return S.retNil();
+	if(level < 0 || level >= static_cast<int32_t>(dwelling->creatures.size())) return S.retNil();
+	S.push(static_cast<int32_t>(dwelling->creatures[level].first));
+	return 1;
+}
+
 VCMI_REGISTER_CORE_SCRIPT_API(GameCbProxy, "Game");
 
 const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
@@ -338,6 +381,8 @@ const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
 	{"getMapObjectIds", &GameCbProxy::getMapObjectIds, false},
 	{"getMonsterCreatureId", &GameCbProxy::getMonsterCreatureId, false},
 	{"getMonsterCount", &GameCbProxy::getMonsterCount, false},
+	{"getDwellingCreatureId", &GameCbProxy::getDwellingCreatureId, false},
+	{"getDwellingCreatureCount", &GameCbProxy::getDwellingCreatureCount, false},
 };
 
 }

@@ -50,6 +50,12 @@ public:
 	static int getMonsterCreatureId(lua_State * L);
 	// FCMI: get the creature count from a map monster object (Obj::MONSTER, slot 0)
 	static int getMonsterCount(lua_State * L);
+	// FCMI: get the creature ID offered by a dwelling at a given level (0-based)
+	// Returns the first creature ID (index 0) from creatures[level].second, or -1 if unavailable.
+	static int getDwellingCreatureId(lua_State * L);
+	// FCMI: get the creature count offered by a dwelling at a given level
+	// Returns creatures[level].first (available count), or 0 if unavailable.
+	static int getDwellingCreatureCount(lua_State * L);
 };
 
 }
