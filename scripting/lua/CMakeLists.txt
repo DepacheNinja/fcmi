@@ -34,6 +34,8 @@ set(lib_SRCS
 		api/netpacks/SetObjectProperty.cpp
 		api/netpacks/ChangeObjPos.cpp
 		api/netpacks/GiveHero.cpp
+		api/netpacks/GiveHeroArtifact.cpp
+		api/netpacks/EraseHeroArtifact.cpp
 
 		api/Artifact.cpp
 		api/BattleCb.cpp
@@ -90,6 +92,8 @@ set(lib_HDRS
 		api/netpacks/SetObjectProperty.h
 		api/netpacks/ChangeObjPos.h
 		api/netpacks/GiveHero.h
+		api/netpacks/GiveHeroArtifact.h
+		api/netpacks/EraseHeroArtifact.h
 
 		api/Artifact.h
 		api/BattleCb.h

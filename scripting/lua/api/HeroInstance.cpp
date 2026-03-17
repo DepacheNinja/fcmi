@@ -16,6 +16,8 @@
 #include "../LuaStack.h"
 #include "../LuaCallWrapper.h"
 #include "../../../lib/constants/EntityIdentifiers.h"
+#include "../../../lib/entities/artifact/CArtifactSet.h"
+#include "../../../lib/entities/artifact/CArtifactInstance.h"
 
 VCMI_LIB_NAMESPACE_BEGIN
 
@@ -83,6 +85,21 @@ static int heroGetFactionId(lua_State * L)
 	return 1;
 }
 
+static int heroGetArtifactAtSlot(lua_State * L)
+{
+	LuaStack S(L);
+	const CGHeroInstance * hero = nullptr;
+	if(!S.tryGet(1, hero)) return S.retNil();
+	int32_t slotIdx = -1;
+	if(!S.tryGet(2, slotIdx)) return S.retNil();
+	S.clear();
+	if(slotIdx < 0 || slotIdx > 18) { S.push(-1); return 1; }
+	const auto * art = hero->getArt(ArtifactPosition(slotIdx));
+	if(!art) { S.push(-1); return 1; }
+	S.push(art->getTypeId().getNum());
+	return 1;
+}
+
 const std::vector<HeroInstanceProxy::CustomRegType> HeroInstanceProxy::REGISTER_CUSTOM =
 {
 	{"getStack", LuaMethodWrapper<CGHeroInstance, decltype(&CCreatureSet::getStackPtr), &CCreatureSet::getStackPtr>::invoke, false},
@@ -102,6 +119,7 @@ const std::vector<HeroInstanceProxy::CustomRegType> HeroInstanceProxy::REGISTER_
 	{"hasSpell", heroHasSpell, false},
 	{"hasSpellbook", heroHasSpellbook, false},
 	{"getFactionId", heroGetFactionId, false},
+	{"getArtifactAtSlot", heroGetArtifactAtSlot, false},
 };
 
 }

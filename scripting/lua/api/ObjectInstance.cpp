@@ -29,6 +29,7 @@ const std::vector<ObjectInstanceProxy::CustomRegType> ObjectInstanceProxy::REGIS
 	{"getObjTypeIndex", LuaMethodWrapper<CGObjectInstance, decltype(&IObjectInterface::getObjTypeIndex), &IObjectInterface::getObjTypeIndex>::invoke, false},
 	{"getVisitablePosition", LuaMethodWrapper<CGObjectInstance, decltype(&IObjectInterface::visitablePos), &IObjectInterface::visitablePos>::invoke, false},
 	{"getPosition", LuaMethodWrapper<CGObjectInstance, decltype(IObjectInterface::getPosition), &IObjectInterface::getPosition>::invoke, false},
+	{"getSubtypeName", LuaMethodWrapper<CGObjectInstance, decltype(&CGObjectInstance::getSubtypeName), &CGObjectInstance::getSubtypeName>::invoke, false},
 };
 
 }
