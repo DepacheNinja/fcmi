@@ -24,6 +24,8 @@
 #include "../networkPacks/PacksForClientBattle.h"
 #include "../networkPacks/StackLocation.h"
 #include "../serializer/JsonSerializeFormat.h"
+#include "../GameLibrary.h"
+#include "../modding/ModScope.h"
 
 #include <vstd/RNG.h>
 
@@ -334,6 +336,34 @@ void CRewardableObject::setPropertyDer(ObjProperty what, ObjPropertyID identifie
 		case ObjProperty::REWARD_CLEARED:
 			onceVisitableObjectCleared = identifier.getNum();
 			break;
+		case ObjProperty::SHRINE_SPELL_ID:
+		{
+			// FCMI: reroll shrine spell (wog_mithril_spending Phase 2)
+			SpellID spell(identifier.getNum());
+			const auto * spellEntity = LIBRARY->spells()->getById(spell);
+			if(spellEntity)
+			{
+				JsonNode variable;
+				variable.String() = spellEntity->getJsonKey();
+				variable.setModScope(ModScope::scopeGame());
+				configuration.presetVariable("spell", "gainedSpell", variable);
+			}
+			break;
+		}
+		case ObjProperty::WITCH_HUT_SKILL_ID:
+		{
+			// FCMI: reroll witch hut skill (wog_mithril_spending Phase 2)
+			SecondarySkill skill(identifier.getNum());
+			const auto * skillEntity = LIBRARY->skills()->getById(skill);
+			if(skillEntity)
+			{
+				JsonNode variable;
+				variable.String() = skillEntity->getJsonKey();
+				variable.setModScope(ModScope::scopeGame());
+				configuration.presetVariable("secondarySkill", "gainedSkill", variable);
+			}
+			break;
+		}
 	}
 }
 

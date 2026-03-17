@@ -47,7 +47,11 @@ enum class ObjProperty : int8_t
 
 	//object with reward
 	REWARD_SELECT,
-	REWARD_CLEARED
+	REWARD_CLEARED,
+
+	// FCMI: rewardable object spell/skill reroll (used by wog_mithril_spending Phase 2)
+	SHRINE_SPELL_ID,      // set shrine's preset spell by SpellID numeric value
+	WITCH_HUT_SKILL_ID,   // set witch hut's preset skill by SecondarySkill numeric value
 };
 
 class NumericID : public StaticIdentifier<NumericID>

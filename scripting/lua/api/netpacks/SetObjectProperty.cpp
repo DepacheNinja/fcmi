@@ -32,6 +32,8 @@ const std::vector<SetObjectPropertyProxy::CustomRegType> SetObjectPropertyProxy:
 	{"new", &Wrapper::constructor, true},
 	{"setId", &SetObjectPropertyProxy::setId, false},
 	{"setOwner", &SetObjectPropertyProxy::setOwner, false},
+	{"setShrineSpell", &SetObjectPropertyProxy::setShrineSpell, false},
+	{"setWitchHutSkill", &SetObjectPropertyProxy::setWitchHutSkill, false},
 	{"toNetpackLight", &PackForClientProxy<SetObjectPropertyProxy>::toNetpackLight, false}
 };
 
@@ -67,6 +69,44 @@ int SetObjectPropertyProxy::setOwner(lua_State * L)
 
 	object->what = ObjProperty::OWNER;
 	object->identifier = PlayerColor(playerIdx);
+	return S.retVoid();
+}
+
+// FCMI Phase 2: reroll shrine spell — sets what=SHRINE_SPELL_ID, identifier=NumericID(spellId)
+// spellId: integer SpellID (e.g. from GAME:getSpellsByLevel)
+int SetObjectPropertyProxy::setShrineSpell(lua_State * L)
+{
+	LuaStack S(L);
+
+	std::shared_ptr<SetObjectProperty> object;
+	if(!S.tryGet(1, object))
+		return S.retVoid();
+
+	int32_t spellId = -1;
+	if(!S.tryGet(2, spellId))
+		return S.retVoid();
+
+	object->what = ObjProperty::SHRINE_SPELL_ID;
+	object->identifier = NumericID(spellId);
+	return S.retVoid();
+}
+
+// FCMI Phase 2: reroll witch hut skill — sets what=WITCH_HUT_SKILL_ID, identifier=NumericID(skillId)
+// skillId: integer SecondarySkill (0-27, matches C.SKILL table in wog_config.lua)
+int SetObjectPropertyProxy::setWitchHutSkill(lua_State * L)
+{
+	LuaStack S(L);
+
+	std::shared_ptr<SetObjectProperty> object;
+	if(!S.tryGet(1, object))
+		return S.retVoid();
+
+	int32_t skillId = -1;
+	if(!S.tryGet(2, skillId))
+		return S.retVoid();
+
+	object->what = ObjProperty::WITCH_HUT_SKILL_ID;
+	object->identifier = NumericID(skillId);
 	return S.retVoid();
 }
 

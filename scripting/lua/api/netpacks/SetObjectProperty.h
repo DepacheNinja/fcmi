@@ -45,6 +45,11 @@ public:
 	static int setId(lua_State * L);
 	// setOwner(playerIndex) — convenience: sets what=OWNER and identifier=PlayerColor(playerIndex)
 	static int setOwner(lua_State * L);
+	// FCMI Phase 2: convenience methods for wog_mithril_spending shrine/witch hut reroll
+	// setShrineSpell(spellId) — sets what=SHRINE_SPELL_ID, identifier=NumericID(spellId)
+	static int setShrineSpell(lua_State * L);
+	// setWitchHutSkill(skillId) — sets what=WITCH_HUT_SKILL_ID, identifier=NumericID(skillId)
+	static int setWitchHutSkill(lua_State * L);
 };
 
 }
