@@ -240,7 +240,7 @@ bool HeroPoolProcessor::hireHero(const ObjectInstanceID & objectID, const HeroTy
 	gameHandler->sendAndApply(hr);
 
 	// Fire HeroHired scripting event so Lua mods can react to hero recruitment
-	events::HeroHired::defaultExecute(gameHandler->serverEventBus.get(), player, recruitedHero->id);
+	events::HeroHired::defaultExecute(gameHandler->eventBus(), player, recruitedHero->id);
 
 	if(recruitableHeroes[0] == recruitedHero)
 		selectNewHeroForSlot(player, TavernHeroSlot::NATIVE, false, false, nextHero);
