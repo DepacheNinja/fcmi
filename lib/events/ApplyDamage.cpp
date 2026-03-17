@@ -26,17 +26,18 @@ SubscriptionRegistry<ApplyDamage> * ApplyDamage::getRegistry()
 }
 
 void ApplyDamage::defaultExecute(const EventBus * bus, BattleStackAttacked & bsa,
-	bool luckyHit, bool rangedAttack, bool ballistaDmg, std::shared_ptr<battle::Unit> target)
+	bool luckyHit, bool rangedAttack, bool ballistaDmg, int32_t attackerOwner, std::shared_ptr<battle::Unit> target)
 {
-	CApplyDamage event(&bsa, luckyHit, rangedAttack, ballistaDmg, std::move(target));
+	CApplyDamage event(&bsa, luckyHit, rangedAttack, ballistaDmg, attackerOwner, std::move(target));
 	bus->executeEvent(event);
 }
 
-CApplyDamage::CApplyDamage(BattleStackAttacked * pack_, bool luckyHit_, bool rangedAttack_, bool ballistaDmg_, std::shared_ptr<battle::Unit> target_)
+CApplyDamage::CApplyDamage(BattleStackAttacked * pack_, bool luckyHit_, bool rangedAttack_, bool ballistaDmg_, int32_t attackerOwner_, std::shared_ptr<battle::Unit> target_)
 	: pack(pack_),
 	luckyHit(luckyHit_),
 	rangedAttack(rangedAttack_),
 	ballistaDmg(ballistaDmg_),
+	attackerOwner(attackerOwner_),
 	target(std::move(target_))
 {
 	initialDamage = pack->damageAmount;
@@ -80,6 +81,11 @@ bool CApplyDamage::isRanged() const
 bool CApplyDamage::isBallistaDmg() const
 {
 	return ballistaDmg;
+}
+
+int32_t CApplyDamage::getAttackerOwner() const
+{
+	return attackerOwner;
 }
 
 

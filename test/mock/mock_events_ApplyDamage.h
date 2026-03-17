@@ -27,6 +27,7 @@ public:
 	MOCK_CONST_METHOD0(isLucky, bool());
 	MOCK_CONST_METHOD0(isRanged, bool());
 	MOCK_CONST_METHOD0(isBallistaDmg, bool());
+	MOCK_CONST_METHOD0(getAttackerOwner, int32_t());
 };
 
 

@@ -38,7 +38,7 @@ public:
 
 	// FCMI: fire the event and update bsa.damageAmount with any script modifications
 	static void defaultExecute(const EventBus * bus, BattleStackAttacked & bsa,
-		bool luckyHit, bool rangedAttack, bool ballistaDmg, std::shared_ptr<battle::Unit> target);
+		bool luckyHit, bool rangedAttack, bool ballistaDmg, int32_t attackerOwner, std::shared_ptr<battle::Unit> target);
 
 	virtual int64_t getInitialDamage() const = 0;
 	virtual int64_t getDamage() const = 0;
@@ -49,6 +49,8 @@ public:
 	virtual bool isLucky() const = 0;
 	virtual bool isRanged() const = 0;
 	virtual bool isBallistaDmg() const = 0;
+	// Returns the attacker's PlayerColor as integer (0-7, or 255 for neutral)
+	virtual int32_t getAttackerOwner() const = 0;
 
 	friend class SubscriptionRegistry<ApplyDamage>;
 };

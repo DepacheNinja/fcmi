@@ -79,6 +79,11 @@ const std::vector<ApplyDamageProxy::CustomRegType> ApplyDamageProxy::REGISTER_CU
 		LuaMethodWrapper<ApplyDamage, decltype(&ApplyDamage::isBallistaDmg), &ApplyDamage::isBallistaDmg>::invoke,
 		false
 	},
+	{
+		"getAttackerOwner",
+		LuaMethodWrapper<ApplyDamage, decltype(&ApplyDamage::getAttackerOwner), &ApplyDamage::getAttackerOwner>::invoke,
+		false
+	},
 };
 
 const std::vector<BattleEndedProxy::CustomRegType> BattleEndedProxy::REGISTER_CUSTOM =

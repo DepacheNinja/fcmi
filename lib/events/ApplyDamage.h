@@ -20,7 +20,7 @@ namespace events
 class DLL_LINKAGE CApplyDamage : public ApplyDamage
 {
 public:
-	CApplyDamage(BattleStackAttacked * pack_, bool luckyHit_, bool rangedAttack_, bool ballistaDmg_, std::shared_ptr<battle::Unit> target_);
+	CApplyDamage(BattleStackAttacked * pack_, bool luckyHit_, bool rangedAttack_, bool ballistaDmg_, int32_t attackerOwner_, std::shared_ptr<battle::Unit> target_);
 
 	bool isEnabled() const override;
 	int64_t getInitialDamage() const override;
@@ -30,6 +30,7 @@ public:
 	bool isLucky() const override;
 	bool isRanged() const override;
 	bool isBallistaDmg() const override;
+	int32_t getAttackerOwner() const override;
 private:
 	int64_t initialDamage;
 
@@ -37,6 +38,7 @@ private:
 	bool luckyHit;
 	bool rangedAttack;
 	bool ballistaDmg;
+	int32_t attackerOwner;
 	std::shared_ptr<battle::Unit> target;
 };
 
