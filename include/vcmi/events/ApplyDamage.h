@@ -15,7 +15,6 @@
 
 VCMI_LIB_NAMESPACE_BEGIN
 
-class EventBus;
 struct BattleStackAttacked;
 
 namespace battle
