@@ -24,6 +24,8 @@
 #include "../../../lib/CPlayerState.h"
 #include "../../../lib/GameLibrary.h"
 #include "../../../lib/spells/CSpellHandler.h"
+#include "../../../lib/mapping/TerrainTile.h"
+#include "../../../lib/TerrainHandler.h"
 
 VCMI_LIB_NAMESPACE_BEGIN
 
@@ -178,6 +180,73 @@ int GameCbProxy::townHasBuilding(lua_State * L)
 	return 1;
 }
 
+// FCMI: get hero map position — GAME:getHeroPosition(heroId)
+// Returns three integers: x, y, z (level). Returns nil if hero not found.
+// Useful for terrain-based effects (Magic Plains mana regen, etc.)
+int GameCbProxy::getHeroPosition(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	ObjectInstanceID heroId;
+	if(!S.tryGet(2, heroId)) return S.retNil();
+	S.clear();
+	const auto * hero = object->getHero(heroId);
+	if(!hero)
+		return S.retNil();
+	const int3 pos = hero->visitablePos();
+	lua_pushinteger(L, pos.x);
+	lua_pushinteger(L, pos.y);
+	lua_pushinteger(L, pos.z);
+	return 3;
+}
+
+// FCMI: get terrain name at map position — GAME:getTerrainAt(x, y, z)
+// Returns the terrain identifier string (e.g. "grass", "dirt", "magicPlains").
+// Common H3 terrains: "dirt", "sand", "grass", "snow", "swamp", "rough",
+//   "subterranean", "lava", "water", "rock".
+// WOG special terrains (from wake-of-gods maps): "magicPlains", "cloverFields",
+//   "fieryFields", "lucidPools", "holyGround", "rockLand", "evilFog", "cursedGround".
+// Returns nil if coordinates are out of bounds.
+int GameCbProxy::getTerrainAt(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	int32_t x = 0, y = 0, z = 0;
+	if(!S.tryGet(2, x)) return S.retNil();
+	if(!S.tryGet(3, y)) return S.retNil();
+	S.tryGet(4, z);  // optional — defaults to 0 (surface)
+	S.clear();
+	const int3 pos(x, y, z);
+	if(!object->isInTheMap(pos)) return S.retNil();
+	const auto * tile = object->getTile(pos, false);
+	if(!tile) return S.retNil();
+	const auto * terrain = tile->getTerrainID().toEntity(LIBRARY);
+	if(!terrain) return S.retNil();
+	S.push(terrain->identifier);
+	return 1;
+}
+
+// FCMI: get the faction ID of a town — GAME:getTownFaction(townId)
+// townId: ObjectInstanceID integer (from getPlayerTowns or BuildingBuilt:getTown)
+// Returns integer faction ID: 0=Castle,1=Rampart,2=Tower,3=Inferno,4=Necropolis,
+//   5=Dungeon,6=Stronghold,7=Fortress,8=Conflux. Returns nil if town not found.
+int GameCbProxy::getTownFaction(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	ObjectInstanceID townId;
+	if(!S.tryGet(2, townId)) return S.retNil();
+	S.clear();
+	const auto * town = dynamic_cast<const CGTownInstance*>(object->getObj(townId, false));
+	if(!town)
+		return S.retNil();
+	S.push(town->getFactionID().getNum());
+	return 1;
+}
+
 VCMI_REGISTER_CORE_SCRIPT_API(GameCbProxy, "Game");
 
 const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
@@ -195,6 +264,9 @@ const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
 	{"getSpellsByLevel", &GameCbProxy::getSpellsByLevel, false},
 	{"getPlayerTowns", &GameCbProxy::getPlayerTowns, false},
 	{"townHasBuilding", &GameCbProxy::townHasBuilding, false},
+	{"getTownFaction", &GameCbProxy::getTownFaction, false},
+	{"getHeroPosition", &GameCbProxy::getHeroPosition, false},
+	{"getTerrainAt", &GameCbProxy::getTerrainAt, false},
 };
 
 }

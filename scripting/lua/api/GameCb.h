@@ -38,6 +38,12 @@ public:
 	static int getPlayerTowns(lua_State * L);
 	// FCMI: check if a town has a specific building by subID
 	static int townHasBuilding(lua_State * L);
+	// FCMI: get the faction ID of a town (0=Castle,1=Rampart,...,8=Conflux)
+	static int getTownFaction(lua_State * L);
+	// FCMI: get hero map position (returns x, y, z integers)
+	static int getHeroPosition(lua_State * L);
+	// FCMI: get terrain ID at map coordinates (returns integer TerrainId)
+	static int getTerrainAt(lua_State * L);
 };
 
 }
