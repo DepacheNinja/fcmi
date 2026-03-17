@@ -26,6 +26,8 @@
 #include "../serializer/JsonSerializeFormat.h"
 #include "../GameLibrary.h"
 #include "../modding/ModScope.h"
+#include "../spells/CSpellHandler.h"
+#include "../CSkillHandler.h"
 
 #include <vstd/RNG.h>
 
