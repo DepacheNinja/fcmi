@@ -26,16 +26,17 @@ SubscriptionRegistry<ApplyDamage> * ApplyDamage::getRegistry()
 }
 
 void ApplyDamage::defaultExecute(const EventBus * bus, BattleStackAttacked & bsa,
-	bool luckyHit, bool rangedAttack, std::shared_ptr<battle::Unit> target)
+	bool luckyHit, bool rangedAttack, bool ballistaDmg, std::shared_ptr<battle::Unit> target)
 {
-	CApplyDamage event(&bsa, luckyHit, rangedAttack, std::move(target));
+	CApplyDamage event(&bsa, luckyHit, rangedAttack, ballistaDmg, std::move(target));
 	bus->executeEvent(event);
 }
 
-CApplyDamage::CApplyDamage(BattleStackAttacked * pack_, bool luckyHit_, bool rangedAttack_, std::shared_ptr<battle::Unit> target_)
+CApplyDamage::CApplyDamage(BattleStackAttacked * pack_, bool luckyHit_, bool rangedAttack_, bool ballistaDmg_, std::shared_ptr<battle::Unit> target_)
 	: pack(pack_),
 	luckyHit(luckyHit_),
 	rangedAttack(rangedAttack_),
+	ballistaDmg(ballistaDmg_),
 	target(std::move(target_))
 {
 	initialDamage = pack->damageAmount;
@@ -74,6 +75,11 @@ bool CApplyDamage::isLucky() const
 bool CApplyDamage::isRanged() const
 {
 	return rangedAttack;
+}
+
+bool CApplyDamage::isBallistaDmg() const
+{
+	return ballistaDmg;
 }
 
 
