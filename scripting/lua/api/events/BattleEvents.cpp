@@ -111,8 +111,12 @@ const std::vector<BattleStartedProxy::CustomRegType> BattleStartedProxy::REGISTE
 	{"subscribeAfter",  &SubscriptionRegistryProxy<BattleStartedProxy>::subscribeAfter,  true},
 	{"getAttackerPlayer", LuaMethodWrapper<BattleStarted, decltype(&BattleStarted::getAttackerPlayer), &BattleStarted::getAttackerPlayer>::invoke, false},
 	{"getAttackerHeroId", LuaMethodWrapper<BattleStarted, decltype(&BattleStarted::getAttackerHeroId), &BattleStarted::getAttackerHeroId>::invoke, false},
+	// FCMI: army object ID — for neutral creatures, the CGCreature map object ID (not hero ID)
+	{"getAttackerArmyId", LuaMethodWrapper<BattleStarted, decltype(&BattleStarted::getAttackerArmyId), &BattleStarted::getAttackerArmyId>::invoke, false},
 	{"getDefenderPlayer", LuaMethodWrapper<BattleStarted, decltype(&BattleStarted::getDefenderPlayer), &BattleStarted::getDefenderPlayer>::invoke, false},
 	{"getDefenderHeroId", LuaMethodWrapper<BattleStarted, decltype(&BattleStarted::getDefenderHeroId), &BattleStarted::getDefenderHeroId>::invoke, false},
+	// FCMI: army object ID — for neutral creatures, the CGCreature map object ID (not hero ID)
+	{"getDefenderArmyId", LuaMethodWrapper<BattleStarted, decltype(&BattleStarted::getDefenderArmyId), &BattleStarted::getDefenderArmyId>::invoke, false},
 };
 
 }

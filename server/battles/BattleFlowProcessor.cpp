@@ -140,15 +140,21 @@ void BattleFlowProcessor::onBattleStarted(const CBattleInfoCallback & battle)
 	gameHandler->turnTimerHandler->onBattleStart(battle.getBattle()->getBattleID());
 
 	// FCMI: fire BattleStarted event — allows Lua scripts (WOG creature relations, etc.)
-	// to react at battle start with both sides' player colors and hero IDs.
+	// to react at battle start with both sides' player colors, hero IDs, and army object IDs.
+	// Army object ID is the hero's ObjectInstanceID when a hero is present, or the neutral
+	// creature's map ObjectInstanceID (CGCreature.id) when fighting a wandering monster.
 	{
 		const auto * attackerHero = battle.getBattle()->getSideHero(BattleSide::ATTACKER);
 		const auto * defenderHero = battle.getBattle()->getSideHero(BattleSide::DEFENDER);
+		const auto * attackerArmy = battle.getBattle()->getSideArmy(BattleSide::ATTACKER);
+		const auto * defenderArmy = battle.getBattle()->getSideArmy(BattleSide::DEFENDER);
 		events::BattleStarted::defaultExecute(gameHandler->eventBus(),
 			battle.getBattle()->getSidePlayer(BattleSide::ATTACKER),
 			battle.getBattle()->getSidePlayer(BattleSide::DEFENDER),
 			attackerHero ? attackerHero->id : ObjectInstanceID::NONE,
-			defenderHero ? defenderHero->id : ObjectInstanceID::NONE);
+			defenderHero ? defenderHero->id : ObjectInstanceID::NONE,
+			attackerArmy ? attackerArmy->id : ObjectInstanceID::NONE,
+			defenderArmy ? defenderArmy->id : ObjectInstanceID::NONE);
 	}
 
 	if (battle.battleGetTacticDist() == 0)

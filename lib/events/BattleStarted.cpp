@@ -28,11 +28,23 @@ void BattleStarted::defaultExecute(const EventBus * bus,
 	const PlayerColor & attacker, const PlayerColor & defender,
 	const ObjectInstanceID & attackerHeroId, const ObjectInstanceID & defenderHeroId)
 {
+	// Backward-compat overload: army IDs same as hero IDs
+	defaultExecute(bus, attacker, defender, attackerHeroId, defenderHeroId,
+		attackerHeroId, defenderHeroId);
+}
+
+void BattleStarted::defaultExecute(const EventBus * bus,
+	const PlayerColor & attacker, const PlayerColor & defender,
+	const ObjectInstanceID & attackerHeroId, const ObjectInstanceID & defenderHeroId,
+	const ObjectInstanceID & attackerArmyId, const ObjectInstanceID & defenderArmyId)
+{
 	CBattleStarted event;
 	event.attackerPlayer = attacker;
 	event.defenderPlayer = defender;
 	event.attackerHeroId = attackerHeroId;
 	event.defenderHeroId = defenderHeroId;
+	event.attackerArmyId = attackerArmyId;
+	event.defenderArmyId = defenderArmyId;
 	bus->executeEvent(event);
 }
 
@@ -61,6 +73,16 @@ int32_t CBattleStarted::getDefenderPlayer() const
 int32_t CBattleStarted::getDefenderHeroId() const
 {
 	return defenderHeroId.getNum();
+}
+
+int32_t CBattleStarted::getAttackerArmyId() const
+{
+	return attackerArmyId.getNum();
+}
+
+int32_t CBattleStarted::getDefenderArmyId() const
+{
+	return defenderArmyId.getNum();
 }
 
 }

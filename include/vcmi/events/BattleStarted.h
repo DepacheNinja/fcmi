@@ -35,13 +35,22 @@ public:
 	static void defaultExecute(const EventBus * bus,
 		const PlayerColor & attacker, const PlayerColor & defender,
 		const ObjectInstanceID & attackerHeroId, const ObjectInstanceID & defenderHeroId);
+	// FCMI: extended overload that also carries army object IDs for neutral-creature battles
+	static void defaultExecute(const EventBus * bus,
+		const PlayerColor & attacker, const PlayerColor & defender,
+		const ObjectInstanceID & attackerHeroId, const ObjectInstanceID & defenderHeroId,
+		const ObjectInstanceID & attackerArmyId, const ObjectInstanceID & defenderArmyId);
 
 	// Attacker side (army1 / BattleSide::ATTACKER)
 	virtual int32_t getAttackerPlayer() const = 0;
 	virtual int32_t getAttackerHeroId() const = 0;
+	// FCMI: army object ID for attacker (same as heroId if hero present; else map object ID of neutral creature)
+	virtual int32_t getAttackerArmyId() const = 0;
 	// Defender side (army2 / BattleSide::DEFENDER)
 	virtual int32_t getDefenderPlayer() const = 0;
 	virtual int32_t getDefenderHeroId() const = 0;
+	// FCMI: army object ID for defender (same as heroId if hero present; else map object ID of neutral creature)
+	virtual int32_t getDefenderArmyId() const = 0;
 
 	friend class SubscriptionRegistry<BattleStarted>;
 };

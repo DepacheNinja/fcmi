@@ -27,13 +27,17 @@ public:
 	bool isEnabled() const override;
 	int32_t getAttackerPlayer() const override;
 	int32_t getAttackerHeroId() const override;
+	int32_t getAttackerArmyId() const override;  // FCMI: army object ID (neutral creature objectId or heroId)
 	int32_t getDefenderPlayer() const override;
 	int32_t getDefenderHeroId() const override;
+	int32_t getDefenderArmyId() const override;  // FCMI: army object ID (neutral creature objectId or heroId)
 
 	PlayerColor attackerPlayer;
 	PlayerColor defenderPlayer;
 	ObjectInstanceID attackerHeroId;
 	ObjectInstanceID defenderHeroId;
+	ObjectInstanceID attackerArmyId;  // FCMI: army object (hero or map neutral creature)
+	ObjectInstanceID defenderArmyId;  // FCMI: army object (hero or map neutral creature)
 };
 
 }
