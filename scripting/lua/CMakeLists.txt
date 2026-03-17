@@ -26,6 +26,8 @@ set(lib_SRCS
 		api/netpacks/SetPrimarySkill.cpp
 		api/netpacks/SetResources.cpp
 		api/netpacks/SetSecSkill.cpp
+		api/netpacks/InsertNewStack.cpp
+		api/netpacks/ChangeStackCount.cpp
 
 		api/Artifact.cpp
 		api/BattleCb.cpp
@@ -74,6 +76,8 @@ set(lib_HDRS
 		api/netpacks/SetPrimarySkill.h
 		api/netpacks/SetResources.h
 		api/netpacks/SetSecSkill.h
+		api/netpacks/InsertNewStack.h
+		api/netpacks/ChangeStackCount.h
 
 		api/Artifact.h
 		api/BattleCb.h

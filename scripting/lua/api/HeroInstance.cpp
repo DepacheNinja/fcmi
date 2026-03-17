@@ -70,6 +70,19 @@ static int heroHasSpellbook(lua_State * L)
 	return 1;
 }
 
+// FCMI: getFactionId — returns integer faction ID for the hero's starting faction.
+// Faction IDs match H3 faction order: 0=Castle,1=Rampart,2=Tower,3=Inferno,4=Necropolis,
+// 5=Dungeon,6=Stronghold,7=Fortress,8=Conflux,9=Neutral.
+static int heroGetFactionId(lua_State * L)
+{
+	LuaStack S(L);
+	const CGHeroInstance * hero = nullptr;
+	if(!S.tryGet(1, hero)) return S.retNil();
+	S.clear();
+	S.push(hero->getFactionID().getNum());
+	return 1;
+}
+
 const std::vector<HeroInstanceProxy::CustomRegType> HeroInstanceProxy::REGISTER_CUSTOM =
 {
 	{"getStack", LuaMethodWrapper<CGHeroInstance, decltype(&CCreatureSet::getStackPtr), &CCreatureSet::getStackPtr>::invoke, false},
@@ -88,6 +101,7 @@ const std::vector<HeroInstanceProxy::CustomRegType> HeroInstanceProxy::REGISTER_
 	{"getManaRegen", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::manaRegain), &CGHeroInstance::manaRegain>::invoke, false},
 	{"hasSpell", heroHasSpell, false},
 	{"hasSpellbook", heroHasSpellbook, false},
+	{"getFactionId", heroGetFactionId, false},
 };
 
 }
