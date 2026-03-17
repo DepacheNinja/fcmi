@@ -24,6 +24,8 @@ public:
 	MOCK_CONST_METHOD0(getDamage, int64_t());
 	MOCK_METHOD1(setDamage, void(int64_t));
 	MOCK_CONST_METHOD0(getTarget, const battle::Unit *());
+	MOCK_CONST_METHOD0(isLucky, bool());
+	MOCK_CONST_METHOD0(isRanged, bool());
 };
 
 

@@ -63,6 +63,17 @@ const std::vector<ApplyDamageProxy::CustomRegType> ApplyDamageProxy::REGISTER_CU
 		LuaMethodWrapper<ApplyDamage, decltype(&ApplyDamage::getTarget), &ApplyDamage::getTarget>::invoke,
 		false
 	},
+	// FCMI: attack metadata for WOG Luck I (206) and Piercing Shot (59)
+	{
+		"isLucky",
+		LuaMethodWrapper<ApplyDamage, decltype(&ApplyDamage::isLucky), &ApplyDamage::isLucky>::invoke,
+		false
+	},
+	{
+		"isRanged",
+		LuaMethodWrapper<ApplyDamage, decltype(&ApplyDamage::isRanged), &ApplyDamage::isRanged>::invoke,
+		false
+	},
 };
 
 const std::vector<BattleEndedProxy::CustomRegType> BattleEndedProxy::REGISTER_CUSTOM =

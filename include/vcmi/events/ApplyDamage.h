@@ -15,6 +15,7 @@
 
 VCMI_LIB_NAMESPACE_BEGIN
 
+class EventBus;
 struct BattleStackAttacked;
 
 namespace battle
@@ -36,10 +37,18 @@ public:
 
 	static Sub * getRegistry();
 
+	// FCMI: fire the event and update bsa.damageAmount with any script modifications
+	static void defaultExecute(const EventBus * bus, BattleStackAttacked & bsa,
+		bool luckyHit, bool rangedAttack, std::shared_ptr<battle::Unit> target);
+
 	virtual int64_t getInitialDamage() const = 0;
 	virtual int64_t getDamage() const = 0;
 	virtual void setDamage(int64_t value) = 0;
 	virtual const battle::Unit * getTarget() const = 0;
+
+	// FCMI: attack metadata — for Lucky Strike (WOG option 206) and Piercing Shot (59)
+	virtual bool isLucky() const = 0;
+	virtual bool isRanged() const = 0;
 
 	friend class SubscriptionRegistry<ApplyDamage>;
 };

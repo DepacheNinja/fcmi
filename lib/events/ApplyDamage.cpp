@@ -9,7 +9,7 @@
  */
 #include "StdInc.h"
 
-#include <vcmi/Environment.h>
+#include <vcmi/events/EventBus.h>
 
 #include "ApplyDamage.h"
 #include "../networkPacks/PacksForClientBattle.h"
@@ -25,8 +25,17 @@ SubscriptionRegistry<ApplyDamage> * ApplyDamage::getRegistry()
 	return Instance.get();
 }
 
-CApplyDamage::CApplyDamage(const Environment * env_, BattleStackAttacked * pack_, std::shared_ptr<battle::Unit> target_)
+void ApplyDamage::defaultExecute(const EventBus * bus, BattleStackAttacked & bsa,
+	bool luckyHit, bool rangedAttack, std::shared_ptr<battle::Unit> target)
+{
+	CApplyDamage event(&bsa, luckyHit, rangedAttack, std::move(target));
+	bus->executeEvent(event);
+}
+
+CApplyDamage::CApplyDamage(BattleStackAttacked * pack_, bool luckyHit_, bool rangedAttack_, std::shared_ptr<battle::Unit> target_)
 	: pack(pack_),
+	luckyHit(luckyHit_),
+	rangedAttack(rangedAttack_),
 	target(std::move(target_))
 {
 	initialDamage = pack->damageAmount;
@@ -55,6 +64,16 @@ void CApplyDamage::setDamage(int64_t value)
 const battle::Unit * CApplyDamage::getTarget() const
 {
 	return target.get();
+}
+
+bool CApplyDamage::isLucky() const
+{
+	return luckyHit;
+}
+
+bool CApplyDamage::isRanged() const
+{
+	return rangedAttack;
 }
 
 

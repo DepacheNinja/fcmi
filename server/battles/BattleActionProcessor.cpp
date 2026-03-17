@@ -33,6 +33,8 @@
 
 #include <vstd/RNG.h>
 
+#include "../../lib/events/ApplyDamage.h"
+
 BattleActionProcessor::BattleActionProcessor(BattleProcessor * owner, CGameHandler * newGameHandler)
 	: owner(owner)
 	, gameHandler(newGameHandler)
@@ -1553,6 +1555,14 @@ void BattleActionProcessor::applyBattleEffects(const CBattleInfoCallback & battl
 			}
 		}
 	}
+	// FCMI: fire ApplyDamage event — allows Lua scripts (WOG Luck I, Piercing Shot, etc.)
+	// to modify bsa.damageAmount before the packet is sent to clients.
+	if(bsa.damageAmount > 0)
+	{
+		events::ApplyDamage::defaultExecute(gameHandler->eventBus(), bsa,
+			bat.lucky(), bat.shot(), def->acquireState());
+	}
+
 	bat.bsa.push_back(bsa); //add this stack to the list of victims after drain life has been calculated
 
 	//fire shield handling
