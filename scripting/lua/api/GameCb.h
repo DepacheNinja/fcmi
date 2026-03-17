@@ -60,6 +60,9 @@ public:
 	// Example: GAME:getCreatureIdByIdentifier("core:serpentFly") or "wake-of-gods.creatures:ghost"
 	// Returns integer CreatureID, or -1 if not found.
 	static int getCreatureIdByIdentifier(lua_State * L);
+	// FCMI: get all battle stacks for a given BattleID
+	// Returns a Lua array of {unitId, side, creatureId} tables; side 0=attacker, 1=defender
+	static int getBattleStacks(lua_State * L);
 };
 
 }

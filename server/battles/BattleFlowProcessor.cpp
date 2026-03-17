@@ -154,7 +154,8 @@ void BattleFlowProcessor::onBattleStarted(const CBattleInfoCallback & battle)
 			attackerHero ? attackerHero->id : ObjectInstanceID::NONE,
 			defenderHero ? defenderHero->id : ObjectInstanceID::NONE,
 			attackerArmy ? attackerArmy->id : ObjectInstanceID::NONE,
-			defenderArmy ? defenderArmy->id : ObjectInstanceID::NONE);
+			defenderArmy ? defenderArmy->id : ObjectInstanceID::NONE,
+			battle.getBattle()->getBattleID());
 	}
 
 	if (battle.battleGetTacticDist() == 0)

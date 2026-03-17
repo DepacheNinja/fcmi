@@ -30,6 +30,7 @@ set(lib_SRCS
 		api/netpacks/ChangeStackCount.cpp
 		api/netpacks/NewStructures.cpp
 		api/netpacks/SetAvailableCreatures.cpp
+		api/netpacks/SetStackEffect.cpp
 
 		api/Artifact.cpp
 		api/BattleCb.cpp
@@ -82,6 +83,7 @@ set(lib_HDRS
 		api/netpacks/ChangeStackCount.h
 		api/netpacks/NewStructures.h
 		api/netpacks/SetAvailableCreatures.h
+		api/netpacks/SetStackEffect.h
 
 		api/Artifact.h
 		api/BattleCb.h

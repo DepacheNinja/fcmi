@@ -17,6 +17,7 @@ VCMI_LIB_NAMESPACE_BEGIN
 
 class PlayerColor;
 class ObjectInstanceID;
+class BattleID;
 
 namespace events
 {
@@ -40,6 +41,12 @@ public:
 		const PlayerColor & attacker, const PlayerColor & defender,
 		const ObjectInstanceID & attackerHeroId, const ObjectInstanceID & defenderHeroId,
 		const ObjectInstanceID & attackerArmyId, const ObjectInstanceID & defenderArmyId);
+	// FCMI: full overload carrying army IDs + battle ID for SetStackEffect use
+	static void defaultExecute(const EventBus * bus,
+		const PlayerColor & attacker, const PlayerColor & defender,
+		const ObjectInstanceID & attackerHeroId, const ObjectInstanceID & defenderHeroId,
+		const ObjectInstanceID & attackerArmyId, const ObjectInstanceID & defenderArmyId,
+		const BattleID & battleId);
 
 	// Attacker side (army1 / BattleSide::ATTACKER)
 	virtual int32_t getAttackerPlayer() const = 0;
@@ -51,6 +58,8 @@ public:
 	virtual int32_t getDefenderHeroId() const = 0;
 	// FCMI: army object ID for defender (same as heroId if hero present; else map object ID of neutral creature)
 	virtual int32_t getDefenderArmyId() const = 0;
+	// FCMI: the BattleID for this battle (needed for SetStackEffect netpack)
+	virtual int32_t getBattleId() const = 0;
 
 	friend class SubscriptionRegistry<BattleStarted>;
 };

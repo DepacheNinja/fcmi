@@ -38,6 +38,16 @@ void BattleStarted::defaultExecute(const EventBus * bus,
 	const ObjectInstanceID & attackerHeroId, const ObjectInstanceID & defenderHeroId,
 	const ObjectInstanceID & attackerArmyId, const ObjectInstanceID & defenderArmyId)
 {
+	defaultExecute(bus, attacker, defender, attackerHeroId, defenderHeroId,
+		attackerArmyId, defenderArmyId, BattleID::NONE);
+}
+
+void BattleStarted::defaultExecute(const EventBus * bus,
+	const PlayerColor & attacker, const PlayerColor & defender,
+	const ObjectInstanceID & attackerHeroId, const ObjectInstanceID & defenderHeroId,
+	const ObjectInstanceID & attackerArmyId, const ObjectInstanceID & defenderArmyId,
+	const BattleID & battleId)
+{
 	CBattleStarted event;
 	event.attackerPlayer = attacker;
 	event.defenderPlayer = defender;
@@ -45,6 +55,7 @@ void BattleStarted::defaultExecute(const EventBus * bus,
 	event.defenderHeroId = defenderHeroId;
 	event.attackerArmyId = attackerArmyId;
 	event.defenderArmyId = defenderArmyId;
+	event.battleId = battleId;
 	bus->executeEvent(event);
 }
 
@@ -83,6 +94,11 @@ int32_t CBattleStarted::getAttackerArmyId() const
 int32_t CBattleStarted::getDefenderArmyId() const
 {
 	return defenderArmyId.getNum();
+}
+
+int32_t CBattleStarted::getBattleId() const
+{
+	return battleId.getNum();
 }
 
 }

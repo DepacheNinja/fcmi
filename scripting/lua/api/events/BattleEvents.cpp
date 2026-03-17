@@ -117,6 +117,8 @@ const std::vector<BattleStartedProxy::CustomRegType> BattleStartedProxy::REGISTE
 	{"getDefenderHeroId", LuaMethodWrapper<BattleStarted, decltype(&BattleStarted::getDefenderHeroId), &BattleStarted::getDefenderHeroId>::invoke, false},
 	// FCMI: army object ID — for neutral creatures, the CGCreature map object ID (not hero ID)
 	{"getDefenderArmyId", LuaMethodWrapper<BattleStarted, decltype(&BattleStarted::getDefenderArmyId), &BattleStarted::getDefenderArmyId>::invoke, false},
+	// FCMI: BattleID integer — used with SetStackEffect and GAME:getBattleStacks()
+	{"getBattleId", LuaMethodWrapper<BattleStarted, decltype(&BattleStarted::getBattleId), &BattleStarted::getBattleId>::invoke, false},
 };
 
 }

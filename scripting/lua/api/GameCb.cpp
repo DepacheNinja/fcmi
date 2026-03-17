@@ -30,6 +30,9 @@
 #include "../../../lib/mapping/CMap.h"
 #include "../../../lib/mapObjects/CGCreature.h"
 #include "../../../lib/mapObjects/CGDwelling.h"
+#include "../../../lib/battle/BattleInfo.h"
+#include "../../../lib/CStack.h"
+#include "../../../lib/battle/CBattleInfoEssentials.h"
 
 VCMI_LIB_NAMESPACE_BEGIN
 
@@ -374,6 +377,47 @@ int GameCbProxy::getCreatureIdByIdentifier(lua_State * L)
 	return 1;
 }
 
+// FCMI: enumerate all battle stacks for a given BattleID — GAME:getBattleStacks(battleId)
+// battleId: integer BattleID (from BattleStarted:getBattleId())
+// Returns a Lua array of {unitId=..., side=..., creatureId=...} tables
+// side: 0 = attacker, 1 = defender
+int GameCbProxy::getBattleStacks(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	int32_t battleIdNum = -1;
+	if(!S.tryGet(2, battleIdNum)) return S.retNil();
+	S.clear();
+
+	BattleID battleId(battleIdNum);
+	const BattleInfo * battle = object->gameState().getBattle(battleId);
+	if(!battle)
+		return S.retNil();
+
+	TStacks stacks = battle->getStacksIf([](const CStack *){ return true; });
+
+	lua_newtable(L);
+	int idx = 1;
+	for(const CStack * stack : stacks)
+	{
+		if(!stack) continue;
+		const CCreature * type = stack->unitType();
+		if(!type) continue;
+
+		lua_newtable(L);
+		lua_pushinteger(L, static_cast<lua_Integer>(stack->unitId()));
+		lua_setfield(L, -2, "unitId");
+		lua_pushinteger(L, static_cast<lua_Integer>(stack->side == BattleSide::ATTACKER ? 0 : 1));
+		lua_setfield(L, -2, "side");
+		lua_pushinteger(L, static_cast<lua_Integer>(type->getIndex()));
+		lua_setfield(L, -2, "creatureId");
+
+		lua_rawseti(L, -2, idx++);
+	}
+	return 1;
+}
+
 VCMI_REGISTER_CORE_SCRIPT_API(GameCbProxy, "Game");
 
 const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
@@ -400,6 +444,7 @@ const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
 	{"getDwellingCreatureId", &GameCbProxy::getDwellingCreatureId, false},
 	{"getDwellingCreatureCount", &GameCbProxy::getDwellingCreatureCount, false},
 	{"getCreatureIdByIdentifier", &GameCbProxy::getCreatureIdByIdentifier, false},
+	{"getBattleStacks", &GameCbProxy::getBattleStacks, false},
 };
 
 }
