@@ -34,6 +34,10 @@ public:
 	static int getPlayerHeroes(lua_State * L);
 	// FCMI: get all spell IDs of a given school level — GAME:getSpellsByLevel(level)
 	static int getSpellsByLevel(lua_State * L);
+	// FCMI: get town IDs for a player
+	static int getPlayerTowns(lua_State * L);
+	// FCMI: check if a town has a specific building by subID
+	static int townHasBuilding(lua_State * L);
 };
 
 }

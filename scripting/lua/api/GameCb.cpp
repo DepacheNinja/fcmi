@@ -18,6 +18,8 @@
 
 #include "../../../lib/callback/IGameInfoCallback.h"
 #include "../../../lib/mapObjects/CGHeroInstance.h"
+#include "../../../lib/mapObjects/CGTownInstance.h"
+#include "../../../lib/constants/EntityIdentifiers.h"
 #include "../../../lib/ResourceSet.h"
 #include "../../../lib/CPlayerState.h"
 #include "../../../lib/GameLibrary.h"
@@ -110,6 +112,8 @@ const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
 	{"isPlayerHuman", &GameCbProxy::isPlayerHuman, false},
 	{"getPlayerHeroes", &GameCbProxy::getPlayerHeroes, false},
 	{"getSpellsByLevel", &GameCbProxy::getSpellsByLevel, false},
+	{"getPlayerTowns", &GameCbProxy::getPlayerTowns, false},
+	{"townHasBuilding", &GameCbProxy::townHasBuilding, false},
 };
 
 }
@@ -140,5 +144,60 @@ int GameCbProxy::getSpellsByLevel(lua_State * L)
 			lua_rawseti(L, -2, idx++);
 		}
 	}
+	return 1;
+}
+
+// FCMI: get list of town IDs for a player — GAME:getPlayerTowns(playerIndex)
+// Returns a Lua table of integer town IDs (ObjectInstanceID.getNum()).
+// Use GAME:getObj(id) to get the ObjectInstance, or GAME:townHasBuilding(id, buildingSubID).
+int GameCbProxy::getPlayerTowns(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	int32_t playerIdx = -1;
+	if(!S.tryGet(2, playerIdx)) return S.retNil();
+	PlayerColor player(playerIdx);
+	S.clear();
+	const auto * state = object->getPlayerState(player, false);
+	if(!state)
+	{
+		lua_newtable(L);
+		return 1;
+	}
+	auto towns = state->getTowns();
+	lua_newtable(L);
+	int idx = 1;
+	for(const auto * town : towns)
+	{
+		if(town)
+		{
+			lua_pushinteger(L, town->id.getNum());
+			lua_rawseti(L, -2, idx++);
+		}
+	}
+	return 1;
+}
+
+// FCMI: check if a town has a specific building — GAME:townHasBuilding(townId, buildingSubID)
+// buildingSubID matches BuildingSubID enum values (MAGES_GUILD_1=0, FORT=7, CITY_HALL=12, etc.)
+// Returns true if the building is built, false otherwise.
+int GameCbProxy::townHasBuilding(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	ObjectInstanceID townId;
+	if(!S.tryGet(2, townId)) return S.retNil();
+	int32_t buildingSubID = -1;
+	if(!S.tryGet(3, buildingSubID)) return S.retNil();
+	S.clear();
+	const auto * town = dynamic_cast<const CGTownInstance*>(object->getObj(townId, false));
+	if(!town)
+	{
+		S.push(false);
+		return 1;
+	}
+	S.push(town->hasBuilt(BuildingID(buildingSubID)));
 	return 1;
 }
