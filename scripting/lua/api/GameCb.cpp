@@ -20,6 +20,8 @@
 #include "../../../lib/mapObjects/CGHeroInstance.h"
 #include "../../../lib/ResourceSet.h"
 #include "../../../lib/CPlayerState.h"
+#include "../../../lib/GameLibrary.h"
+#include "../../../lib/spells/CSpellHandler.h"
 
 VCMI_LIB_NAMESPACE_BEGIN
 
@@ -107,9 +109,36 @@ const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
 	{"getPlayerResource", &GameCbProxy::getPlayerResource, false},
 	{"isPlayerHuman", &GameCbProxy::isPlayerHuman, false},
 	{"getPlayerHeroes", &GameCbProxy::getPlayerHeroes, false},
+	{"getSpellsByLevel", &GameCbProxy::getSpellsByLevel, false},
 };
 
 }
 }
 
 VCMI_LIB_NAMESPACE_END
+
+// FCMI: get all spell IDs of a given school level — GAME:getSpellsByLevel(level)
+// level: 1-5 (spell school level)
+// Returns a Lua table of integer spell IDs (SpellID values).
+// Use with ChangeSpells netpack to give spells to heroes.
+int GameCbProxy::getSpellsByLevel(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	int32_t targetLevel = 1;
+	S.tryGet(2, targetLevel);
+	S.clear();
+
+	lua_newtable(L);
+	int idx = 1;
+	for(const auto & spell : LIBRARY->spellh->objects)
+	{
+		if(spell && spell->getLevel() == targetLevel && !spell->isSpecial())
+		{
+			lua_pushinteger(L, spell->getId().getNum());
+			lua_rawseti(L, -2, idx++);
+		}
+	}
+	return 1;
+}

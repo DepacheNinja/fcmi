@@ -15,6 +15,7 @@
 
 #include "../LuaStack.h"
 #include "../LuaCallWrapper.h"
+#include "../../../lib/constants/EntityIdentifiers.h"
 
 VCMI_LIB_NAMESPACE_BEGIN
 
@@ -63,9 +64,33 @@ const std::vector<HeroInstanceProxy::CustomRegType> HeroInstanceProxy::REGISTER_
 	{"getMana", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getMana), &CGHeroInstance::getMana>::invoke, false},
 	{"getManaMax", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::manaLimit), &CGHeroInstance::manaLimit>::invoke, false},
 	{"getManaRegen", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::manaRegain), &CGHeroInstance::manaRegain>::invoke, false},
+	{"hasSpell", heroHasSpell, false},
+	{"hasSpellbook", heroHasSpellbook, false},
 };
 
 }
 }
 
 VCMI_LIB_NAMESPACE_END
+
+static int heroHasSpell(lua_State * L)
+{
+	LuaStack S(L);
+	const CGHeroInstance * hero = nullptr;
+	if(!S.tryGet(1, hero)) return S.retNil();
+	int32_t spellId = -1;
+	if(!S.tryGet(2, spellId)) return S.retNil();
+	S.clear();
+	S.push(hero->spellbookContainsSpell(SpellID(spellId)));
+	return 1;
+}
+
+static int heroHasSpellbook(lua_State * L)
+{
+	LuaStack S(L);
+	const CGHeroInstance * hero = nullptr;
+	if(!S.tryGet(1, hero)) return S.retNil();
+	S.clear();
+	S.push(hero->hasSpellbook());
+	return 1;
+}

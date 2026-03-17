@@ -32,6 +32,8 @@ public:
 	static int getPlayerResource(lua_State * L);
 	static int isPlayerHuman(lua_State * L);
 	static int getPlayerHeroes(lua_State * L);
+	// FCMI: get all spell IDs of a given school level — GAME:getSpellsByLevel(level)
+	static int getSpellsByLevel(lua_State * L);
 };
 
 }

@@ -28,6 +28,10 @@ class HeroInstanceProxy : public OpaqueWrapper<const CGHeroInstance, HeroInstanc
 public:
 	using Wrapper = OpaqueWrapper<const CGHeroInstance, HeroInstanceProxy>;
 	static const std::vector<typename Wrapper::CustomRegType> REGISTER_CUSTOM;
+	// FCMI: check if hero has a specific spell in their spellbook
+	static int hasSpell(lua_State * L);
+	// FCMI: check if hero has a spellbook
+	static int hasSpellbook(lua_State * L);
 };
 
 
