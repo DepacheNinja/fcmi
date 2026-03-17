@@ -85,6 +85,7 @@
 #include <vcmi/events/EventBus.h>
 #include <vcmi/events/GenericEvents.h>
 #include <vcmi/events/AdventureEvents.h>
+#include <vcmi/events/BattleEvents.h>
 
 #include <boost/lexical_cast.hpp>
 
@@ -134,10 +135,11 @@ IGameServer & CGameHandler::gameServer() const
 	return server;
 }
 
-void CGameHandler::levelUpHero(const CGHeroInstance * hero, SecondarySkill skill)
+void CGameHandler::levelUpHero(const CGHeroInstance * hero, SecondarySkill skill, PrimarySkill primSkillGained)
 {
 	changeSecSkill(hero, skill, 1, ChangeValueMode::RELATIVE);
 	expGiven(hero);
+	events::HeroLevelUp::defaultExecute(serverEventBus.get(), hero->tempOwner, hero->id, hero->level, static_cast<int>(primSkillGained));
 }
 
 void CGameHandler::levelUpHero(const CGHeroInstance * hero)
@@ -170,12 +172,13 @@ void CGameHandler::levelUpHero(const CGHeroInstance * hero)
 	if (hlu.skills.size() == 0)
 	{
 		sendAndApply(hlu);
+		events::HeroLevelUp::defaultExecute(serverEventBus.get(), hero->tempOwner, hero->id, hero->level, static_cast<int>(primarySkill));
 		levelUpHero(hero);
 	}
 	else if (hlu.skills.size() == 1 || !hero->getOwner().isValidPlayer())
 	{
 		sendAndApply(hlu);
-		levelUpHero(hero, hlu.skills.front());
+		levelUpHero(hero, hlu.skills.front(), primarySkill);
 	}
 	else if (hlu.skills.size() > 1)
 	{

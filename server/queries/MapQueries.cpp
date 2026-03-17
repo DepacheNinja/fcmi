@@ -233,7 +233,7 @@ void CHeroLevelUpDialogQuery::onRemoval(PlayerColor color)
 {
 	assert(answer);
 	logGlobal->trace("Completing hero level-up query. %s gains skill %d", hero->getObjectName(), answer.value());
-	gh->levelUpHero(hero, hlu.skills[*answer]);
+	gh->levelUpHero(hero, hlu.skills[*answer], hlu.primskill);
 }
 
 void CHeroLevelUpDialogQuery::onAdded(PlayerColor color)

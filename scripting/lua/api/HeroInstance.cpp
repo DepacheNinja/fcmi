@@ -28,6 +28,15 @@ const std::vector<HeroInstanceProxy::CustomRegType> HeroInstanceProxy::REGISTER_
 {
 	{"getStack", LuaMethodWrapper<CGHeroInstance, decltype(&CCreatureSet::getStackPtr), &CCreatureSet::getStackPtr>::invoke, false},
 	{"getOwner", LuaMethodWrapper<CGHeroInstance, decltype(&CGObjectInstance::getOwner), &CGObjectInstance::getOwner>::invoke, false},
+	{"getLevel", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getLevel), &CGHeroInstance::getLevel>::invoke, false},
+	{"getExperience", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getExp), &CGHeroInstance::getExp>::invoke, false},
+	{"getAttack", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getAttack), &CGHeroInstance::getAttack>::invoke, false},
+	{"getDefense", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getDefense), &CGHeroInstance::getDefense>::invoke, false},
+	{"getSpellPower", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getSpellPower), &CGHeroInstance::getSpellPower>::invoke, false},
+	{"getKnowledge", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getKnowledge), &CGHeroInstance::getKnowledge>::invoke, false},
+	{"getPrimSkillLevel", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getPrimSkillLevel), &CGHeroInstance::getPrimSkillLevel>::invoke, false},
+	{"getSecSkillLevel", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getSecSkillLevel), &CGHeroInstance::getSecSkillLevel>::invoke, false},
+	{"getId", LuaMethodWrapper<CGHeroInstance, decltype(&CGObjectInstance::getId), &CGObjectInstance::getId>::invoke, false},
 };
 
 }

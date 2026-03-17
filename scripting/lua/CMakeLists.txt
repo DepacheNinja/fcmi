@@ -20,7 +20,10 @@ set(lib_SRCS
 		api/netpacks/BattleUnitsChanged.cpp
 		api/netpacks/EntitiesChanged.cpp
 		api/netpacks/InfoWindow.cpp
+		api/netpacks/SetHeroExperience.cpp
+		api/netpacks/SetPrimarySkill.cpp
 		api/netpacks/SetResources.cpp
+		api/netpacks/SetSecSkill.cpp
 
 		api/Artifact.cpp
 		api/BattleCb.cpp
@@ -63,7 +66,10 @@ set(lib_HDRS
 		api/netpacks/EntitiesChanged.h
 		api/netpacks/InfoWindow.h
 		api/netpacks/PackForClient.h
+		api/netpacks/SetHeroExperience.h
+		api/netpacks/SetPrimarySkill.h
 		api/netpacks/SetResources.h
+		api/netpacks/SetSecSkill.h
 
 		api/Artifact.h
 		api/BattleCb.h

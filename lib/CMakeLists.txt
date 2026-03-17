@@ -116,7 +116,9 @@ set(lib_MAIN_SRCS
 	entities/ResourceTypeHandler.cpp
 
 	events/ApplyDamage.cpp
+	events/BattleEnded.cpp
 	events/GameResumed.cpp
+	events/HeroLevelUp.cpp
 	events/ObjectVisitEnded.cpp
 	events/ObjectVisitStarted.cpp
 	events/PlayerGotTurn.cpp
@@ -403,11 +405,13 @@ set(lib_MAIN_HEADERS
 
 	../include/vcmi/events/AdventureEvents.h
 	../include/vcmi/events/ApplyDamage.h
+	../include/vcmi/events/BattleEnded.h
 	../include/vcmi/events/BattleEvents.h
 	../include/vcmi/events/Event.h
 	../include/vcmi/events/EventBus.h
 	../include/vcmi/events/GameResumed.h
 	../include/vcmi/events/GenericEvents.h
+	../include/vcmi/events/HeroLevelUp.h
 	../include/vcmi/events/ObjectVisitEnded.h
 	../include/vcmi/events/ObjectVisitStarted.h
 	../include/vcmi/events/PlayerGotTurn.h
@@ -545,7 +549,9 @@ set(lib_MAIN_HEADERS
 	entities/ResourceTypeHandler.h
 
 	events/ApplyDamage.h
+	events/BattleEnded.h
 	events/GameResumed.h
+	events/HeroLevelUp.h
 	events/ObjectVisitEnded.h
 	events/ObjectVisitStarted.h
 	events/PlayerGotTurn.h

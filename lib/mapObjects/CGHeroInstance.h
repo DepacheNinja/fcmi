@@ -190,6 +190,13 @@ public:
 	ui8 getSecSkillLevel(const SecondarySkill & skill) const; //0 - no skill
 	int getPrimSkillLevel(PrimarySkill id) const;
 
+	ui32 getLevel() const { return level; }
+	TExpType getExp() const { return exp; }
+	int getAttack() const { return getPrimSkillLevel(PrimarySkill::ATTACK); }
+	int getDefense() const { return getPrimSkillLevel(PrimarySkill::DEFENSE); }
+	int getSpellPower() const { return getPrimSkillLevel(PrimarySkill::SPELL_POWER); }
+	int getKnowledge() const { return getPrimSkillLevel(PrimarySkill::KNOWLEDGE); }
+
 	/// Returns true if hero has free secondary skill slot.
 	bool canLearnSkill() const;
 	bool canLearnSkill(const SecondarySkill & which) const;

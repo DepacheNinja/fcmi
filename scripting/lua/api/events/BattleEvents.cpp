@@ -26,8 +26,10 @@ namespace api
 namespace events
 {
 using ::events::ApplyDamage;
+using ::events::BattleEnded;
 
 VCMI_REGISTER_SCRIPT_API(ApplyDamageProxy, "events.ApplyDamage");
+VCMI_REGISTER_SCRIPT_API(BattleEndedProxy, "events.BattleEnded");
 
 const std::vector<ApplyDamageProxy::CustomRegType> ApplyDamageProxy::REGISTER_CUSTOM =
 {
@@ -61,7 +63,17 @@ const std::vector<ApplyDamageProxy::CustomRegType> ApplyDamageProxy::REGISTER_CU
 		LuaMethodWrapper<ApplyDamage, decltype(&ApplyDamage::getTarget), &ApplyDamage::getTarget>::invoke,
 		false
 	},
+};
 
+const std::vector<BattleEndedProxy::CustomRegType> BattleEndedProxy::REGISTER_CUSTOM =
+{
+	{"subscribeBefore", &SubscriptionRegistryProxy<BattleEndedProxy>::subscribeBefore, true},
+	{"subscribeAfter", &SubscriptionRegistryProxy<BattleEndedProxy>::subscribeAfter, true},
+	{"getVictor", LuaMethodWrapper<BattleEnded, decltype(&BattleEnded::getVictorIndex), &BattleEnded::getVictorIndex>::invoke, false},
+	{"getLoser", LuaMethodWrapper<BattleEnded, decltype(&BattleEnded::getLoserIndex), &BattleEnded::getLoserIndex>::invoke, false},
+	{"getWinnerHeroId", LuaMethodWrapper<BattleEnded, decltype(&BattleEnded::getWinnerHeroId), &BattleEnded::getWinnerHeroId>::invoke, false},
+	{"getLoserHeroId", LuaMethodWrapper<BattleEnded, decltype(&BattleEnded::getLoserHeroId), &BattleEnded::getLoserHeroId>::invoke, false},
+	{"getExpAwarded", LuaMethodWrapper<BattleEnded, decltype(&BattleEnded::getExpAwarded), &BattleEnded::getExpAwarded>::invoke, false},
 };
 
 }

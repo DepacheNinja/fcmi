@@ -65,6 +65,7 @@ public:
 	{
 		return this->tempOwner;
 	}
+	ObjectInstanceID getId() const { return id; }
 	void setOwner(const PlayerColor & ow);
 	void setAnchorPos(int3 pos);
 

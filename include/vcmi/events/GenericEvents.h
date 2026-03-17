@@ -11,5 +11,6 @@
 #pragma once
 
 #include "GameResumed.h"
+#include "HeroLevelUp.h"
 #include "PlayerGotTurn.h"
 #include "TurnStarted.h"

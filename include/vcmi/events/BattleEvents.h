@@ -11,3 +11,4 @@
 #pragma once
 
 #include "ApplyDamage.h"
+#include "BattleEnded.h"

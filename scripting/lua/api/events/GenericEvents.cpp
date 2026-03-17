@@ -25,10 +25,12 @@ namespace api
 namespace events
 {
 using ::events::GameResumed;
+using ::events::HeroLevelUp;
 using ::events::PlayerGotTurn;
 using ::events::TurnStarted;
 
 VCMI_REGISTER_SCRIPT_API(GameResumedProxy, "events.GameResumed");
+VCMI_REGISTER_SCRIPT_API(HeroLevelUpProxy, "events.HeroLevelUp");
 VCMI_REGISTER_SCRIPT_API(PlayerGotTurnProxy, "events.PlayerGotTurn");
 VCMI_REGISTER_SCRIPT_API(TurnStartedProxy, "events.TurnStarted");
 
@@ -82,6 +84,16 @@ const std::vector<TurnStartedProxy::CustomRegType> TurnStartedProxy::REGISTER_CU
 		&SubscriptionRegistryProxy<TurnStartedProxy>::subscribeAfter,
 		true
 	}
+};
+
+const std::vector<HeroLevelUpProxy::CustomRegType> HeroLevelUpProxy::REGISTER_CUSTOM =
+{
+	{"subscribeBefore", &SubscriptionRegistryProxy<HeroLevelUpProxy>::subscribeBefore, true},
+	{"subscribeAfter", &SubscriptionRegistryProxy<HeroLevelUpProxy>::subscribeAfter, true},
+	{"getPlayer", LuaMethodWrapper<HeroLevelUp, decltype(&HeroLevelUp::getPlayerIndex), &HeroLevelUp::getPlayerIndex>::invoke, false},
+	{"getHero", LuaMethodWrapper<HeroLevelUp, decltype(&HeroLevelUp::getHero), &HeroLevelUp::getHero>::invoke, false},
+	{"getLevel", LuaMethodWrapper<HeroLevelUp, decltype(&HeroLevelUp::getLevel), &HeroLevelUp::getLevel>::invoke, false},
+	{"getPrimarySkillGained", LuaMethodWrapper<HeroLevelUp, decltype(&HeroLevelUp::getPrimarySkillGained), &HeroLevelUp::getPrimarySkillGained>::invoke, false},
 };
 
 }

@@ -32,6 +32,7 @@
 #include "../../lib/spells/CSpellHandler.h"
 
 #include <boost/lexical_cast.hpp>
+#include <vcmi/events/BattleEvents.h>
 
 BattleResultProcessor::BattleResultProcessor(CGameHandler * gameHandler)
 	: gameHandler(gameHandler)
@@ -294,6 +295,16 @@ void BattleResultProcessor::endBattle(const CBattleInfoCallback & battle)
 	}
 
 	gameHandler->turnTimerHandler->onBattleEnd(battle.getBattle()->getBattleID());
+
+	{
+		const auto & fbh = *finishingBattles.at(battle.getBattle()->getBattleID());
+		ObjectInstanceID winnerHeroId = fbh.isDraw() ? ObjectInstanceID::NONE : fbh.winnerId;
+		ObjectInstanceID loserHeroId  = fbh.isDraw() ? ObjectInstanceID::NONE : fbh.loserId;
+		int64_t exp = fbh.isDraw() ? 0 : static_cast<int64_t>(battleResult->exp[fbh.winnerSide]);
+		events::BattleEnded::defaultExecute(gameHandler->eventBus(),
+			fbh.victor, fbh.loser, winnerHeroId, loserHeroId, exp);
+	}
+
 	gameHandler->sendAndApply(*battleResult);
 
 	if (battleResult->queryID == QueryID::NONE)
