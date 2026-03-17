@@ -12,3 +12,4 @@
 
 #include "ApplyDamage.h"
 #include "BattleEnded.h"
+#include "BattleStarted.h"

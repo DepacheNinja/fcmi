@@ -1,0 +1,68 @@
+/*
+ * BattleStarted.cpp, part of VCMI engine
+ *
+ * Authors: listed in file AUTHORS in main folder
+ *
+ * License: GNU General Public License v2.0 or later
+ * Full text of license available in license.txt file, in main folder
+ *
+ */
+#include "StdInc.h"
+
+#include "BattleStarted.h"
+
+#include <vcmi/events/EventBus.h>
+
+VCMI_LIB_NAMESPACE_BEGIN
+
+namespace events
+{
+
+SubscriptionRegistry<BattleStarted> * BattleStarted::getRegistry()
+{
+	static auto Instance = std::make_unique<SubscriptionRegistry<BattleStarted>>();
+	return Instance.get();
+}
+
+void BattleStarted::defaultExecute(const EventBus * bus,
+	const PlayerColor & attacker, const PlayerColor & defender,
+	const ObjectInstanceID & attackerHeroId, const ObjectInstanceID & defenderHeroId)
+{
+	CBattleStarted event;
+	event.attackerPlayer = attacker;
+	event.defenderPlayer = defender;
+	event.attackerHeroId = attackerHeroId;
+	event.defenderHeroId = defenderHeroId;
+	bus->executeEvent(event);
+}
+
+CBattleStarted::CBattleStarted() = default;
+
+bool CBattleStarted::isEnabled() const
+{
+	return true;
+}
+
+int32_t CBattleStarted::getAttackerPlayer() const
+{
+	return attackerPlayer.getNum();
+}
+
+int32_t CBattleStarted::getAttackerHeroId() const
+{
+	return attackerHeroId.getNum();
+}
+
+int32_t CBattleStarted::getDefenderPlayer() const
+{
+	return defenderPlayer.getNum();
+}
+
+int32_t CBattleStarted::getDefenderHeroId() const
+{
+	return defenderHeroId.getNum();
+}
+
+}
+
+VCMI_LIB_NAMESPACE_END

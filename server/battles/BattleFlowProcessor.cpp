@@ -21,6 +21,7 @@
 #include "../../lib/bonuses/BonusParameters.h"
 #include "../../lib/callback/GameRandomizer.h"
 #include "../../lib/entities/building/TownFortifications.h"
+#include "../../lib/events/BattleStarted.h"
 #include "../../lib/mapObjects/CGTownInstance.h"
 #include "../../lib/networkPacks/PacksForClientBattle.h"
 #include "../../lib/spells/BonusCaster.h"
@@ -137,6 +138,18 @@ void BattleFlowProcessor::onBattleStarted(const CBattleInfoCallback & battle)
 	tryPlaceMoats(battle);
 
 	gameHandler->turnTimerHandler->onBattleStart(battle.getBattle()->getBattleID());
+
+	// FCMI: fire BattleStarted event — allows Lua scripts (WOG creature relations, etc.)
+	// to react at battle start with both sides' player colors and hero IDs.
+	{
+		const auto * attackerHero = battle.getBattle()->getSideHero(BattleSide::ATTACKER);
+		const auto * defenderHero = battle.getBattle()->getSideHero(BattleSide::DEFENDER);
+		events::BattleStarted::defaultExecute(gameHandler->eventBus(),
+			battle.getBattle()->getSidePlayer(BattleSide::ATTACKER),
+			battle.getBattle()->getSidePlayer(BattleSide::DEFENDER),
+			attackerHero ? attackerHero->id : ObjectInstanceID::NONE,
+			defenderHero ? defenderHero->id : ObjectInstanceID::NONE);
+	}
 
 	if (battle.battleGetTacticDist() == 0)
 		onTacticsEnded(battle);
