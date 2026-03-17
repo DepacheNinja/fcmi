@@ -25,11 +25,13 @@ namespace api
 namespace events
 {
 using ::events::GameResumed;
+using ::events::HeroHired;
 using ::events::HeroLevelUp;
 using ::events::PlayerGotTurn;
 using ::events::TurnStarted;
 
 VCMI_REGISTER_SCRIPT_API(GameResumedProxy, "events.GameResumed");
+VCMI_REGISTER_SCRIPT_API(HeroHiredProxy, "events.HeroHired");
 VCMI_REGISTER_SCRIPT_API(HeroLevelUpProxy, "events.HeroLevelUp");
 VCMI_REGISTER_SCRIPT_API(PlayerGotTurnProxy, "events.PlayerGotTurn");
 VCMI_REGISTER_SCRIPT_API(TurnStartedProxy, "events.TurnStarted");
@@ -84,6 +86,14 @@ const std::vector<TurnStartedProxy::CustomRegType> TurnStartedProxy::REGISTER_CU
 		&SubscriptionRegistryProxy<TurnStartedProxy>::subscribeAfter,
 		true
 	}
+};
+
+const std::vector<HeroHiredProxy::CustomRegType> HeroHiredProxy::REGISTER_CUSTOM =
+{
+	{"subscribeBefore", &SubscriptionRegistryProxy<HeroHiredProxy>::subscribeBefore, true},
+	{"subscribeAfter",  &SubscriptionRegistryProxy<HeroHiredProxy>::subscribeAfter,  true},
+	{"getPlayer", LuaMethodWrapper<HeroHired, decltype(&HeroHired::getPlayerIndex), &HeroHired::getPlayerIndex>::invoke, false},
+	{"getHero",   LuaMethodWrapper<HeroHired, decltype(&HeroHired::getHero),        &HeroHired::getHero>::invoke,        false},
 };
 
 const std::vector<HeroLevelUpProxy::CustomRegType> HeroLevelUpProxy::REGISTER_CUSTOM =

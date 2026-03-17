@@ -27,6 +27,7 @@
 #include "../../lib/gameState/TavernHeroesPool.h"
 #include "../../lib/gameState/TavernSlot.h"
 #include "../../lib/IGameSettings.h"
+#include "../../lib/events/HeroHired.h"
 
 HeroPoolProcessor::HeroPoolProcessor(CGameHandler * gameHandler)
 	: gameHandler(gameHandler)
@@ -237,6 +238,9 @@ bool HeroPoolProcessor::hireHero(const ObjectInstanceID & objectID, const HeroTy
 
 	// apply netpack -> this will remove hired hero from pool
 	gameHandler->sendAndApply(hr);
+
+	// Fire HeroHired scripting event so Lua mods can react to hero recruitment
+	events::HeroHired::defaultExecute(gameHandler->serverEventBus.get(), player, recruitedHero->id);
 
 	if(recruitableHeroes[0] == recruitedHero)
 		selectNewHeroForSlot(player, TavernHeroSlot::NATIVE, false, false, nextHero);

@@ -46,6 +46,13 @@ public:
 	static const std::vector<typename Wrapper::CustomRegType> REGISTER_CUSTOM;
 };
 
+class HeroHiredProxy : public OpaqueWrapper<::events::HeroHired, HeroHiredProxy>
+{
+public:
+	using Wrapper = OpaqueWrapper<::events::HeroHired, HeroHiredProxy>;
+	static const std::vector<typename Wrapper::CustomRegType> REGISTER_CUSTOM;
+};
+
 class HeroLevelUpProxy : public OpaqueWrapper<::events::HeroLevelUp, HeroLevelUpProxy>
 {
 public:

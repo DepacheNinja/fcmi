@@ -119,6 +119,7 @@ set(lib_MAIN_SRCS
 	events/BattleEnded.cpp
 	events/BattleStarted.cpp
 	events/GameResumed.cpp
+	events/HeroHired.cpp
 	events/HeroLevelUp.cpp
 	events/ObjectVisitEnded.cpp
 	events/ObjectVisitStarted.cpp
@@ -413,6 +414,7 @@ set(lib_MAIN_HEADERS
 	../include/vcmi/events/EventBus.h
 	../include/vcmi/events/GameResumed.h
 	../include/vcmi/events/GenericEvents.h
+	../include/vcmi/events/HeroHired.h
 	../include/vcmi/events/HeroLevelUp.h
 	../include/vcmi/events/ObjectVisitEnded.h
 	../include/vcmi/events/ObjectVisitStarted.h
@@ -553,6 +555,7 @@ set(lib_MAIN_HEADERS
 	events/ApplyDamage.h
 	events/BattleEnded.h
 	events/GameResumed.h
+	events/HeroHired.h
 	events/HeroLevelUp.h
 	events/ObjectVisitEnded.h
 	events/ObjectVisitStarted.h
