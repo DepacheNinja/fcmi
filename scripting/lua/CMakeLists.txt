@@ -31,6 +31,9 @@ set(lib_SRCS
 		api/netpacks/NewStructures.cpp
 		api/netpacks/SetAvailableCreatures.cpp
 		api/netpacks/SetStackEffect.cpp
+		api/netpacks/SetObjectProperty.cpp
+		api/netpacks/ChangeObjPos.cpp
+		api/netpacks/GiveHero.cpp
 
 		api/Artifact.cpp
 		api/BattleCb.cpp
@@ -84,6 +87,9 @@ set(lib_HDRS
 		api/netpacks/NewStructures.h
 		api/netpacks/SetAvailableCreatures.h
 		api/netpacks/SetStackEffect.h
+		api/netpacks/SetObjectProperty.h
+		api/netpacks/ChangeObjPos.h
+		api/netpacks/GiveHero.h
 
 		api/Artifact.h
 		api/BattleCb.h

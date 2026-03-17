@@ -63,6 +63,10 @@ public:
 	// FCMI: get all battle stacks for a given BattleID
 	// Returns a Lua array of {unitId, side, creatureId} tables; side 0=attacker, 1=defender
 	static int getBattleStacks(lua_State * L);
+	// FCMI: get the hero type ID (integer HeroTypeID) for a hero — for specialty scaling
+	static int getHeroTypeId(lua_State * L);
+	// FCMI: get position of any map object by ObjectInstanceID — returns x, y, z integers
+	static int getObjectPosition(lua_State * L);
 };
 
 }

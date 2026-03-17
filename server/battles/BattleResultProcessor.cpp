@@ -302,7 +302,8 @@ void BattleResultProcessor::endBattle(const CBattleInfoCallback & battle)
 		ObjectInstanceID loserHeroId  = fbh.isDraw() ? ObjectInstanceID::NONE : fbh.loserId;
 		int64_t exp = fbh.isDraw() ? 0 : static_cast<int64_t>(battleResult->exp[fbh.winnerSide]);
 		events::BattleEnded::defaultExecute(gameHandler->eventBus(),
-			fbh.victor, fbh.loser, winnerHeroId, loserHeroId, exp);
+			fbh.victor, fbh.loser, winnerHeroId, loserHeroId, exp,
+			static_cast<int32_t>(battleResult->result));
 	}
 
 	gameHandler->sendAndApply(*battleResult);

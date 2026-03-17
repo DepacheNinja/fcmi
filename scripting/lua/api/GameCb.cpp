@@ -418,6 +418,45 @@ int GameCbProxy::getBattleStacks(lua_State * L)
 	return 1;
 }
 
+// FCMI: get the hero type ID — GAME:getHeroTypeId(heroId)
+// heroId: ObjectInstanceID integer (from getPlayerHeroes)
+// Returns the integer HeroTypeID, used for hero specialty scaling in wog_hero_spec_boost.lua.
+// Returns nil if hero not found.
+int GameCbProxy::getHeroTypeId(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	ObjectInstanceID heroId;
+	if(!S.tryGet(2, heroId)) return S.retNil();
+	S.clear();
+	const auto * hero = object->getHero(heroId);
+	if(!hero) return S.retNil();
+	S.push(hero->getHeroTypeID().getNum());
+	return 1;
+}
+
+// FCMI: get map position of any object — GAME:getObjectPosition(objectId)
+// objectId: ObjectInstanceID integer
+// Returns three integers: x, y, z (level). Returns nil if object not found.
+// Useful for ChangeObjPos and wandering-monster placement.
+int GameCbProxy::getObjectPosition(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	ObjectInstanceID objId;
+	if(!S.tryGet(2, objId)) return S.retNil();
+	S.clear();
+	const auto * obj = object->getObj(objId, false);
+	if(!obj) return S.retNil();
+	const int3 pos = obj->visitablePos();
+	lua_pushinteger(L, pos.x);
+	lua_pushinteger(L, pos.y);
+	lua_pushinteger(L, pos.z);
+	return 3;
+}
+
 VCMI_REGISTER_CORE_SCRIPT_API(GameCbProxy, "Game");
 
 const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
@@ -445,6 +484,8 @@ const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
 	{"getDwellingCreatureCount", &GameCbProxy::getDwellingCreatureCount, false},
 	{"getCreatureIdByIdentifier", &GameCbProxy::getCreatureIdByIdentifier, false},
 	{"getBattleStacks", &GameCbProxy::getBattleStacks, false},
+	{"getHeroTypeId", &GameCbProxy::getHeroTypeId, false},
+	{"getObjectPosition", &GameCbProxy::getObjectPosition, false},
 };
 
 }

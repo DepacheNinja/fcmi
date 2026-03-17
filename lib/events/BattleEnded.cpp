@@ -28,12 +28,21 @@ void BattleEnded::defaultExecute(const EventBus * bus, const PlayerColor & victo
 	const PlayerColor & loser, const ObjectInstanceID & winnerHeroId,
 	const ObjectInstanceID & loserHeroId, int64_t expAwarded)
 {
+	defaultExecute(bus, victor, loser, winnerHeroId, loserHeroId, expAwarded, 0);
+}
+
+// FCMI: overload that also carries the battle result type (0=NORMAL, 1=ESCAPE, 2=SURRENDER)
+void BattleEnded::defaultExecute(const EventBus * bus, const PlayerColor & victor,
+	const PlayerColor & loser, const ObjectInstanceID & winnerHeroId,
+	const ObjectInstanceID & loserHeroId, int64_t expAwarded, int32_t battleResultType)
+{
 	CBattleEnded event;
 	event.victor = victor;
 	event.loser = loser;
 	event.winnerHeroId = winnerHeroId;
 	event.loserHeroId = loserHeroId;
 	event.expAwarded = expAwarded;
+	event.battleResultType = battleResultType;
 	bus->executeEvent(event);
 }
 
@@ -77,6 +86,11 @@ ObjectInstanceID CBattleEnded::getLoserHeroId() const
 int64_t CBattleEnded::getExpAwarded() const
 {
 	return expAwarded;
+}
+
+int32_t CBattleEnded::getBattleResult() const
+{
+	return battleResultType;
 }
 
 }

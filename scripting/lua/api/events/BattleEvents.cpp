@@ -103,6 +103,8 @@ const std::vector<BattleEndedProxy::CustomRegType> BattleEndedProxy::REGISTER_CU
 	{"getWinnerHeroId", LuaMethodWrapper<BattleEnded, decltype(&BattleEnded::getWinnerHeroId), &BattleEnded::getWinnerHeroId>::invoke, false},
 	{"getLoserHeroId", LuaMethodWrapper<BattleEnded, decltype(&BattleEnded::getLoserHeroId), &BattleEnded::getLoserHeroId>::invoke, false},
 	{"getExpAwarded", LuaMethodWrapper<BattleEnded, decltype(&BattleEnded::getExpAwarded), &BattleEnded::getExpAwarded>::invoke, false},
+	// FCMI: 0=NORMAL, 1=ESCAPE, 2=SURRENDER — lets Lua detect how the battle ended
+	{"getBattleResult", LuaMethodWrapper<BattleEnded, decltype(&BattleEnded::getBattleResult), &BattleEnded::getBattleResult>::invoke, false},
 };
 
 const std::vector<BattleStartedProxy::CustomRegType> BattleStartedProxy::REGISTER_CUSTOM =

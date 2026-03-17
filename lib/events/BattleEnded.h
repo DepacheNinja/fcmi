@@ -33,12 +33,14 @@ public:
 	ObjectInstanceID getWinnerHeroId() const override;
 	ObjectInstanceID getLoserHeroId() const override;
 	int64_t getExpAwarded() const override;
+	int32_t getBattleResult() const override;
 
 	PlayerColor victor;
 	PlayerColor loser;
 	ObjectInstanceID winnerHeroId;
 	ObjectInstanceID loserHeroId;
 	int64_t expAwarded = 0;
+	int32_t battleResultType = 0; // FCMI: 0=NORMAL, 1=ESCAPE, 2=SURRENDER
 };
 
 }

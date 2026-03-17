@@ -33,6 +33,10 @@ public:
 	static void defaultExecute(const EventBus * bus, const PlayerColor & victor,
 		const PlayerColor & loser, const ObjectInstanceID & winnerHeroId,
 		const ObjectInstanceID & loserHeroId, int64_t expAwarded);
+	// FCMI: overload that also passes battle result type (0=NORMAL, 1=ESCAPE, 2=SURRENDER)
+	static void defaultExecute(const EventBus * bus, const PlayerColor & victor,
+		const PlayerColor & loser, const ObjectInstanceID & winnerHeroId,
+		const ObjectInstanceID & loserHeroId, int64_t expAwarded, int32_t battleResultType);
 
 	virtual PlayerColor getVictor() const = 0;
 	virtual int32_t getVictorIndex() const = 0;
@@ -41,6 +45,8 @@ public:
 	virtual ObjectInstanceID getWinnerHeroId() const = 0;
 	virtual ObjectInstanceID getLoserHeroId() const = 0;
 	virtual int64_t getExpAwarded() const = 0;
+	// FCMI: 0=NORMAL, 1=ESCAPE, 2=SURRENDER
+	virtual int32_t getBattleResult() const = 0;
 
 	friend class SubscriptionRegistry<BattleEnded>;
 };
