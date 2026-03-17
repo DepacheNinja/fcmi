@@ -24,11 +24,19 @@ namespace events
 {
 
 using ::events::ObjectVisitStarted;
+using ::events::ObjectVisitEnded;
 
 class ObjectVisitStartedProxy : public OpaqueWrapper<ObjectVisitStarted, ObjectVisitStartedProxy>
 {
 public:
 	using Wrapper = OpaqueWrapper<ObjectVisitStarted, ObjectVisitStartedProxy>;
+	static const std::vector<typename Wrapper::CustomRegType> REGISTER_CUSTOM;
+};
+
+class ObjectVisitEndedProxy : public OpaqueWrapper<ObjectVisitEnded, ObjectVisitEndedProxy>
+{
+public:
+	using Wrapper = OpaqueWrapper<ObjectVisitEnded, ObjectVisitEndedProxy>;
 	static const std::vector<typename Wrapper::CustomRegType> REGISTER_CUSTOM;
 };
 

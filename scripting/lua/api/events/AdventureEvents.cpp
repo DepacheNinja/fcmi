@@ -34,6 +34,16 @@ const std::vector<ObjectVisitStartedProxy::CustomRegType> ObjectVisitStartedProx
 	{"getObject", LuaMethodWrapper<ObjectVisitStarted, decltype(&ObjectVisitStarted::getObject), &ObjectVisitStarted::getObject>::invoke, false},
 };
 
+VCMI_REGISTER_SCRIPT_API(ObjectVisitEndedProxy, "events.ObjectVisitEnded");
+
+const std::vector<ObjectVisitEndedProxy::CustomRegType> ObjectVisitEndedProxy::REGISTER_CUSTOM =
+{
+	{"subscribeBefore", &SubscriptionRegistryProxy<ObjectVisitEndedProxy>::subscribeBefore, true},
+	{"subscribeAfter",  &SubscriptionRegistryProxy<ObjectVisitEndedProxy>::subscribeAfter,  true},
+	{"getPlayer", LuaMethodWrapper<ObjectVisitEnded, decltype(&ObjectVisitEnded::getPlayer), &ObjectVisitEnded::getPlayer>::invoke, false},
+	{"getHero",   LuaMethodWrapper<ObjectVisitEnded, decltype(&ObjectVisitEnded::getHero),   &ObjectVisitEnded::getHero>::invoke,   false},
+};
+
 }
 }
 }
