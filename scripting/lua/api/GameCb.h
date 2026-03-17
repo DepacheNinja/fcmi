@@ -31,6 +31,7 @@ public:
 	// FCMI additions for WOG Lua scripting
 	static int getPlayerResource(lua_State * L);
 	static int isPlayerHuman(lua_State * L);
+	static int getPlayerHeroes(lua_State * L);
 };
 
 }

@@ -21,6 +21,7 @@ set(lib_SRCS
 		api/netpacks/EntitiesChanged.cpp
 		api/netpacks/InfoWindow.cpp
 		api/netpacks/SetHeroExperience.cpp
+		api/netpacks/SetMana.cpp
 		api/netpacks/SetPrimarySkill.cpp
 		api/netpacks/SetResources.cpp
 		api/netpacks/SetSecSkill.cpp
@@ -67,6 +68,7 @@ set(lib_HDRS
 		api/netpacks/InfoWindow.h
 		api/netpacks/PackForClient.h
 		api/netpacks/SetHeroExperience.h
+		api/netpacks/SetMana.h
 		api/netpacks/SetPrimarySkill.h
 		api/netpacks/SetResources.h
 		api/netpacks/SetSecSkill.h

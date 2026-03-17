@@ -61,6 +61,38 @@ int GameCbProxy::isPlayerHuman(lua_State * L)
 	return 1;
 }
 
+// FCMI: get list of hero IDs for a player — GAME:getPlayerHeroes(playerIndex)
+// Returns a Lua table of integer hero IDs (ObjectInstanceID.getNum()).
+// Use GAME:getHero(id) to get the hero object.
+int GameCbProxy::getPlayerHeroes(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	int32_t playerIdx = -1;
+	if(!S.tryGet(2, playerIdx)) return S.retNil();
+	PlayerColor player(playerIdx);
+	S.clear();
+	const auto * state = object->getPlayerState(player, false);
+	if(!state)
+	{
+		lua_newtable(L);
+		return 1;
+	}
+	auto heroes = state->getHeroes();
+	lua_newtable(L);
+	int idx = 1;
+	for(const auto * hero : heroes)
+	{
+		if(hero)
+		{
+			lua_pushinteger(L, hero->id.getNum());
+			lua_rawseti(L, -2, idx++);
+		}
+	}
+	return 1;
+}
+
 VCMI_REGISTER_CORE_SCRIPT_API(GameCbProxy, "Game");
 
 const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
@@ -71,9 +103,10 @@ const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
 
 	{"getObj", LuaMethodWrapper<GameCb, decltype(&GameCb::getObj), &GameCb::getObj>::invoke, false},
 
-	// FCMI additions: player resource and human check needed for WOG Lua scripts
+	// FCMI additions: player resource, human check, and hero iteration for WOG Lua scripts
 	{"getPlayerResource", &GameCbProxy::getPlayerResource, false},
 	{"isPlayerHuman", &GameCbProxy::isPlayerHuman, false},
+	{"getPlayerHeroes", &GameCbProxy::getPlayerHeroes, false},
 };
 
 }

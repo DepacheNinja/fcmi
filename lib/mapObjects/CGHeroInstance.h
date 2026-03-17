@@ -196,6 +196,7 @@ public:
 	int getDefense() const { return getPrimSkillLevel(PrimarySkill::DEFENSE); }
 	int getSpellPower() const { return getPrimSkillLevel(PrimarySkill::SPELL_POWER); }
 	int getKnowledge() const { return getPrimSkillLevel(PrimarySkill::KNOWLEDGE); }
+	si32 getMana() const { return mana; }
 
 	/// Returns true if hero has free secondary skill slot.
 	bool canLearnSkill() const;

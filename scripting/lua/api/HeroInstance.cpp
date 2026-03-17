@@ -37,6 +37,9 @@ const std::vector<HeroInstanceProxy::CustomRegType> HeroInstanceProxy::REGISTER_
 	{"getPrimSkillLevel", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getPrimSkillLevel), &CGHeroInstance::getPrimSkillLevel>::invoke, false},
 	{"getSecSkillLevel", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getSecSkillLevel), &CGHeroInstance::getSecSkillLevel>::invoke, false},
 	{"getId", LuaMethodWrapper<CGHeroInstance, decltype(&CGObjectInstance::getId), &CGObjectInstance::getId>::invoke, false},
+	{"getMana", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::getMana), &CGHeroInstance::getMana>::invoke, false},
+	{"getManaMax", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::manaLimit), &CGHeroInstance::manaLimit>::invoke, false},
+	{"getManaRegen", LuaMethodWrapper<CGHeroInstance, decltype(&CGHeroInstance::manaRegain), &CGHeroInstance::manaRegain>::invoke, false},
 };
 
 }
