@@ -71,6 +71,11 @@ public:
 	static int getMineResource(lua_State * L);
 	// FCMI: get the owner player index of a map object — GAME:getObjectOwner(objId) → int (-1 if neutral)
 	static int getObjectOwner(lua_State * L);
+	// FCMI: map dimension queries — GAME:getMapWidth(), getMapHeight(), getMapLevels()
+	// Width/Height: tile count. Levels: 1 (surface only) or 2 (surface + underground).
+	static int getMapWidth(lua_State * L);
+	static int getMapHeight(lua_State * L);
+	static int getMapLevels(lua_State * L);
 };
 
 }
