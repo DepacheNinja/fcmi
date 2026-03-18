@@ -31,6 +31,11 @@ public:
 	template<typename NetPack>
 	static int apply(lua_State * L);
 	static int commitPackage(lua_State * L);
+	// FCMI: SERVER:spawnObject(scope, type, subtype, x, y, z [, initiator])
+	// Places a mod-registered map object at tile (x, y, z) on the current map.
+	// scope/type/subtype are mod identifier strings, e.g. "wog-newage.objects", "wogArtificer", "wogArtificer"
+	// initiator is an optional player index (default 255 = neutral/system)
+	static int spawnObject(lua_State * L);
 };
 
 }

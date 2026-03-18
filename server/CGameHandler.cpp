@@ -4425,6 +4425,39 @@ std::shared_ptr<CGObjectInstance> CGameHandler::createNewObject(const int3 & vis
 	return o;
 }
 
+// FCMI: string-based overload — resolves mod object identifier to handler, then creates the object.
+// Called by ServerSpellCastEnvironment::createMapObject() for Lua SERVER:spawnObject().
+std::shared_ptr<CGObjectInstance> CGameHandler::createNewObject(const int3 & visitablePosition, const std::string & scope, const std::string & type, const std::string & subtype)
+{
+	if (!gameState().isInTheMap(visitablePosition))
+		throw std::runtime_error("Attempt to create object outside map at " + visitablePosition.toString());
+
+	TerrainId terrainType = gameState().getMap().getTile(visitablePosition).getTerrainID();
+
+	auto handler = LIBRARY->objtypeh->getHandlerFor(scope, type, subtype);
+	if (!handler)
+		throw std::runtime_error("No handler found for object: " + scope + ":" + type + ":" + subtype);
+
+	auto o = handler->create(&gameInfo(), nullptr);
+	handler->configureObject(o.get(), *randomizer);
+	gs->getMap().generateUniqueInstanceName(o.get());
+
+	if (handler->getTemplates().empty())
+		throw std::runtime_error("Object has no templates: " + scope + ":" + type + ":" + subtype);
+
+	if (!handler->getTemplates(terrainType).empty())
+		o->appearance = handler->getTemplates(terrainType).front();
+	else
+		o->appearance = handler->getTemplates().front();
+
+	if (o->isVisitable())
+		o->setAnchorPos(visitablePosition + o->getVisitableOffset());
+	else
+		o->setAnchorPos(visitablePosition);
+
+	return o;
+}
+
 void CGameHandler::createWanderingMonster(const int3 & visitablePosition, CreatureID creature, int unitSize)
 {
 	auto createdObject = createNewObject(visitablePosition, Obj::MONSTER, creature);

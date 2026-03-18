@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <string>
+
 VCMI_LIB_NAMESPACE_BEGIN
 
 namespace vstd
@@ -45,6 +47,13 @@ public:
 	virtual void apply(StacksInjured & pack) = 0;
 	virtual void apply(BattleObstaclesChanged & pack) = 0;
 	virtual void apply(CatapultAttack & pack) = 0;
+
+	// FCMI: place a new map object at the given position.
+	// scope/type/subtype identify the object via mod identifier strings.
+	// Example: scope="wog-newage.objects", type="wogArtificer", subtype="wogArtificer"
+	// initiatorPlayer: PlayerColor integer (255 = neutral/system)
+	// Default no-op — only ServerSpellCastEnvironment provides the real implementation.
+	virtual void createMapObject(const std::string & scope, const std::string & type, const std::string & subtype, int x, int y, int z, int initiatorPlayer) {}
 };
 
 VCMI_LIB_NAMESPACE_END

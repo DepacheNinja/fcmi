@@ -46,6 +46,11 @@ const std::vector<ServerCbProxy::CustomRegType> ServerCbProxy::REGISTER_CUSTOM =
 		"commitPackage",
 		&ServerCbProxy::commitPackage,
 		false
+	},
+	{
+		"spawnObject",
+		&ServerCbProxy::spawnObject,
+		false
 	}
 };
 
@@ -76,6 +81,29 @@ int ServerCbProxy::commitPackage(lua_State * L)
 
 	object->apply(*pack);
 
+	return S.retVoid();
+}
+
+int ServerCbProxy::spawnObject(lua_State * L)
+{
+	LuaStack S(L);
+
+	ServerCallback * object = nullptr;
+	if(!S.tryGet(1, object))
+		return S.retNil();
+
+	std::string scope, type, subtype;
+	if(!S.tryGet(2, scope))   return S.retVoid();
+	if(!S.tryGet(3, type))    return S.retVoid();
+	if(!S.tryGet(4, subtype)) return S.retVoid();
+
+	int32_t x = 0, y = 0, z = 0, initiator = 255;
+	if(!S.tryGet(5, x)) return S.retVoid();
+	if(!S.tryGet(6, y)) return S.retVoid();
+	S.tryGet(7, z);          // optional, default 0 (surface)
+	S.tryGet(8, initiator);  // optional, default 255 (neutral/system)
+
+	object->createMapObject(scope, type, subtype, x, y, z, initiator);
 	return S.retVoid();
 }
 
