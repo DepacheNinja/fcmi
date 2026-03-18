@@ -99,6 +99,19 @@ void ServerSpellCastEnvironment::createBoat(const int3 & visitablePosition, Boat
 	return gh->createBoat(visitablePosition, type, initiator);
 }
 
+void ServerSpellCastEnvironment::createMapObject(const std::string & scope, const std::string & type, const std::string & subtype, int x, int y, int z, int initiatorPlayer)
+{
+	try
+	{
+		auto obj = gh->createNewObject(int3(x, y, z), scope, type, subtype);
+		gh->newObject(obj, PlayerColor(initiatorPlayer));
+	}
+	catch(const std::exception & e)
+	{
+		gh->complain(std::string("SERVER:spawnObject failed: ") + e.what());
+	}
+}
+
 void ServerSpellCastEnvironment::genericQuery(Query * request, PlayerColor color, std::function<void(std::optional<int32_t>)> callback)
 {
 	auto query = std::make_shared<CGenericQuery>(gh, color, callback);

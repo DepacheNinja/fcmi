@@ -29,7 +29,8 @@ public:
 	using BattleCb = IBattleInfoCallback;
 	using GameCb = IGameInfoCallback;
 
-	virtual ~Environment() = default;
+	Environment();
+	virtual ~Environment();
 
 	virtual const Services * services() const = 0;
 	virtual const BattleCb * battle(const BattleID & battleID) const = 0;

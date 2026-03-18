@@ -39,6 +39,8 @@ public:
 	bool moveHero(ObjectInstanceID hid, int3 dst, EMovementMode mode) override;
 	void createBoat(const int3 & visitablePosition, BoatId type, PlayerColor initiator) override;
 	void genericQuery(Query * request, PlayerColor color, std::function<void(std::optional<int32_t>)> callback) override;
+	// FCMI: place a mod-registered map object at the given tile — called by SERVER:spawnObject() in Lua
+	void createMapObject(const std::string & scope, const std::string & type, const std::string & subtype, int x, int y, int z, int initiatorPlayer) override;
 private:
 	CGameHandler * gh;
 };

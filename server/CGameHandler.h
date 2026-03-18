@@ -105,6 +105,8 @@ public:
 	// Helpers to create new object of specified type
 
 	std::shared_ptr<CGObjectInstance> createNewObject(const int3 & visitablePosition, MapObjectID objectID, MapObjectSubID subID);
+	// FCMI: string-based overload for Lua scripting — resolves scope/type/subtype via mod handler registry
+	std::shared_ptr<CGObjectInstance> createNewObject(const int3 & visitablePosition, const std::string & scope, const std::string & type, const std::string & subtype);
 	void createWanderingMonster(const int3 & visitablePosition, CreatureID creature, int unitSize);
 	void createBoat(const int3 & visitablePosition, BoatId type, PlayerColor initiator) override;
 	void createHole(const int3 & visitablePosition, PlayerColor initiator);

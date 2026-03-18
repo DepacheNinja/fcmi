@@ -499,6 +499,45 @@ int GameCbProxy::getObjectOwner(lua_State * L)
 	return 1;
 }
 
+// FCMI: map dimension queries — GAME:getMapWidth() / getMapHeight() / getMapLevels()
+// Returns tile count for width/height, or 1/2 for surface-only / surface+underground.
+// Required for auto-wogify object placement (wog_auto_wogify.lua).
+int GameCbProxy::getMapWidth(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	S.clear();
+	const CMapHeader * hdr = object->getMapHeader();
+	if(!hdr) return S.retNil();
+	S.push(static_cast<int32_t>(hdr->width));
+	return 1;
+}
+
+int GameCbProxy::getMapHeight(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	S.clear();
+	const CMapHeader * hdr = object->getMapHeader();
+	if(!hdr) return S.retNil();
+	S.push(static_cast<int32_t>(hdr->height));
+	return 1;
+}
+
+int GameCbProxy::getMapLevels(lua_State * L)
+{
+	LuaStack S(L);
+	const GameCb * object = nullptr;
+	if(!S.tryGet(1, object)) return S.retNil();
+	S.clear();
+	const CMapHeader * hdr = object->getMapHeader();
+	if(!hdr) return S.retNil();
+	S.push(static_cast<int32_t>(hdr->levels()));
+	return 1;
+}
+
 VCMI_REGISTER_CORE_SCRIPT_API(GameCbProxy, "Game");
 
 const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
@@ -530,6 +569,9 @@ const std::vector<GameCbProxy::CustomRegType> GameCbProxy::REGISTER_CUSTOM =
 	{"getObjectPosition", &GameCbProxy::getObjectPosition, false},
 	{"getMineResource", &GameCbProxy::getMineResource, false},
 	{"getObjectOwner", &GameCbProxy::getObjectOwner, false},
+	{"getMapWidth",  &GameCbProxy::getMapWidth,  false},
+	{"getMapHeight", &GameCbProxy::getMapHeight, false},
+	{"getMapLevels", &GameCbProxy::getMapLevels, false},
 };
 
 }
