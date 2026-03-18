@@ -1,5 +1,6 @@
 set(lib_SRCS
 	StdInc.cpp
+	Environment.cpp
 
 	filesystem/AdapterLoaders.cpp
 	filesystem/CArchiveLoader.cpp
